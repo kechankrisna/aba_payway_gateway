@@ -33,4 +33,7 @@ void main(List<String> arguments) async {
 
   var createResponse =
       await service.createTransaction(transaction: _transaction);
+
+  print(_transaction.amount);
+  print(createResponse.status);
 }

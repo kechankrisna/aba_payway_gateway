@@ -1,10 +1,10 @@
 name: dart_payway
 description: Allow you to integrate your app in dart language with ABA PayWay
 version: 1.0.0
-# repository: https://github.com/my_org/my_repo
+repository: https://github.com/kechankrisna/aba_payway_gateway/tree/main/dart_payway
 
 environment:
-  sdk: ^2.19.0
+  sdk: '>=2.19.0 <4.0.0'
 
 
 # Add regular dependencies here.

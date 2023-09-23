@@ -101,8 +101,8 @@ class ABAClientService {
     // assert(tranID != null);
     // assert(amount != null);
     var key = utf8.encode(merchant!.merchantApiKey!);
-    var raw =
-        "$reqTime ${merchant!.merchantID} $tranId $amount $items $shipping $ctid $pwt $firstName $lastName $email $phone $type $paymentOption $returnUrl $cancelUrl $continueSuccessUrl $returnDeeplink $currency $customFields $returnParams";
+    /// var raw =
+    ///     "$reqTime ${merchant!.merchantID} $tranId $amount $items $shipping $ctid $pwt $firstName $lastName $email $phone $type $paymentOption $returnUrl $cancelUrl $continueSuccessUrl $returnDeeplink $currency $customFields $returnParams";
     var str =
         "$reqTime${merchant!.merchantID}$tranId$amount$items$shipping$ctid$pwt$firstName$lastName$email$phone$type$paymentOption$returnUrl$cancelUrl$continueSuccessUrl$returnDeeplink$currency$customFields$returnParams";
 
