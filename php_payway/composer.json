@@ -9,7 +9,8 @@
         }
     ],
     "require": {
-        "guzzlehttp/guzzle": "^7.8"
+        "guzzlehttp/guzzle": "^7.8",
+        "netresearch/jsonmapper": "^4.2"
     },
     "require-dev": {
         "pestphp/pest-plugin": "^1.1",
