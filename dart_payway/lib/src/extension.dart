@@ -5,7 +5,7 @@ extension AcceptPaymentOptionParsing on ABAPaymentOption {
   String get toText => toString().split(".").last;
 }
 
-extension StringParsing on String {
+extension ABAPaywayStringParsing on String {
   /// [fromText] conver text to enum AcceptPaymentOption
   ABAPaymentOption get toAcceptPaymentOption {
     switch (this) {
