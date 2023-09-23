@@ -2,6 +2,12 @@
     "name": "aba_payway_gateway/php_payway",
     "description": "Allow you to integrate your app in php language with ABA PayWay",
     "type": "library",
+    "authors": [
+        {
+            "name": "kechankrisna",
+            "email": "ke.chankrisna168@gmail.com"
+        }
+    ],
     "require": {
         "guzzlehttp/guzzle": "^7.8"
     },
@@ -26,10 +32,7 @@
             "AbaPaywayGateway\\PhpPayway\\": "src/"
         }
     },
-    "authors": [
-        {
-            "name": "kechankrisna",
-            "email": "ke.chankrisna168@gmail.com"
-        }
-    ]
+    
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }
