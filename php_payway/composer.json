@@ -1,0 +1,35 @@
+{
+    "name": "aba_payway_gateway/php_payway",
+    "description": "Allow you to integrate your app in php language with ABA PayWay",
+    "type": "library",
+    "require": {
+        "guzzlehttp/guzzle": "^7.8"
+    },
+    "require-dev": {
+        "pestphp/pest-plugin": "^1.1",
+        "pestphp/pest-plugin-laravel": "^1.4",
+        "pestphp/pest-plugin-parallel": "^1.2",
+        "phpunit/phpunit": "^9.6"
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true,
+            "php-http/discovery": true
+        },
+        "platform-check": true
+    },
+    "autoload": {
+        "psr-4": {
+            "AbaPaywayGateway\\PhpPayway\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "kechankrisna",
+            "email": "ke.chankrisna168@gmail.com"
+        }
+    ]
+}
