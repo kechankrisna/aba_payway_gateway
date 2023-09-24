@@ -4,7 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:intl/intl.dart';
 
 class PaywayTransactionService {
-  
+
   late ABAMerchant merchant;  
 
   PaywayTransactionService({required this.merchant});
@@ -27,7 +27,7 @@ class PaywayTransactionService {
     }
     assert([ABAPaymentOption.abapay_deeplink].contains(_transaction.option));
 
-    final clientService = ABAClientFormRequestService(merchant: merchant!);
+    final clientService = ABAClientFormRequestService(merchant: merchant);
     Map<String, dynamic> map =
         clientService.generateCreateTransactionFormData(_transaction);
 
@@ -71,7 +71,7 @@ class PaywayTransactionService {
       ABAPaymentOption.abapay,
     ].contains(_transaction.option));
 
-    final clientService = ABAClientFormRequestService(merchant: merchant!);
+    final clientService = ABAClientFormRequestService(merchant: merchant);
     Map<String, dynamic> map =
         clientService.generateCreateTransactionFormData(_transaction);
 
@@ -89,7 +89,7 @@ class PaywayTransactionService {
       bool enabledLogger = false}) async {
     var res = PaywayCheckTransactionResponse(status: 11);
 
-    final clientService = ABAClientFormRequestService(merchant: merchant!);
+    final clientService = ABAClientFormRequestService(merchant: merchant);
     Map<String, dynamic> map =
         clientService.generateCheckTransactionFormData(transaction);
 
