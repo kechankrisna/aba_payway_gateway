@@ -2,7 +2,7 @@ import 'package:dart_payway/dart_payway.dart';
 
 void main(List<String> arguments) async {
   Map env = {};
-  PaywayTransactionService.ensureInitialized(ABAMerchant(
+  final service = PaywayTransactionService(merchant: ABAMerchant(
     merchantID: env['ABA_PAYWAY_MERCHANT_ID'] ?? '',
     merchantApiName: env['ABA_PAYWAY_MERCHANT_NAME'] ?? '',
     merchantApiKey: env['ABA_PAYWAY_API_KEY'] ?? '',
@@ -11,7 +11,6 @@ void main(List<String> arguments) async {
   ));
 
   /// create transaction
-  final service = PaywayTransactionService.instance!;
   final tranID = service.uniqueTranID();
 
   var _transaction = PaywayCreateTransaction(

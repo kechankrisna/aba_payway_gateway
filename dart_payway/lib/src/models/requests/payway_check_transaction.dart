@@ -1,48 +1,4 @@
 import 'package:intl/intl.dart';
-import 'package:dart_payway/dart_payway.dart';
-
-extension PaywayCheckTransactionExt on PaywayCheckTransaction {
-  String get hash {
-    assert(PaywayTransactionService.instance != null);
-    if (PaywayTransactionService.instance == null) {
-      throw Exception(
-          'Make sure run PaywayTransactionService.ensureInitialized()');
-    }
-    final merchant = PaywayTransactionService.instance!.merchant;
-
-    return ABAClientService(merchant).getHash(
-      reqTime: reqTime.toString(),
-      tranId: tranId.toString(),
-      amount: "",
-      items: "",
-      shipping: "",
-      firstName: "",
-      lastName: "",
-      email: "",
-      phone: "",
-      type: "",
-      paymentOption: "",
-      currency: "",
-      returnUrl: "",
-    );
-  }
-
-  Map<String, dynamic> toFormDataMap() {
-    assert(PaywayTransactionService.instance != null);
-    if (PaywayTransactionService.instance == null) {
-      throw Exception(
-          'Make sure run PaywayTransactionService.ensureInitialized()');
-    }
-    final merchant = PaywayTransactionService.instance!.merchant;
-    var map = {
-      "merchant_id": "${merchant!.merchantID}",
-      "req_time": reqTime,
-      "tran_id": tranId,
-      "hash": hash,
-    };
-    return map;
-  }
-}
 
 class PaywayCheckTransaction {
   final String tranId;

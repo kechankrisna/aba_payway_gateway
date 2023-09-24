@@ -4,31 +4,12 @@ import 'package:dio/dio.dart';
 import 'package:intl/intl.dart';
 
 class PaywayTransactionService {
-  static PaywayTransactionService? instance;
+  
+  late ABAMerchant merchant;  
 
-  PaywayTransactionService._();
+  PaywayTransactionService({required this.merchant});
 
-  static PaywayTransactionService ensureInitialized(ABAMerchant merchant) {
-    PaywayTransactionService.instance ??= PaywayTransactionService._();
-    PaywayTransactionService.instance!.initialize(merchant);
-    return PaywayTransactionService.instance!;
-  }
-
-  void initialize(ABAMerchant merchant) {
-    assert(PaywayTransactionService.instance != null);
-    if (PaywayTransactionService.instance == null) {
-      throw Exception(
-          'Make sure run PaywayTransactionService.ensureInitialized()');
-    }
-    instance!.merchant = merchant;
-  }
-
-  ABAMerchant? merchant;
-
-  ABAClientService? get helper {
-    if (merchant == null) return null;
-    return ABAClientService(merchant);
-  }
+  ABAClientService? get helper => ABAClientService(merchant);
 
   String uniqueTranID() => "${DateTime.now().microsecondsSinceEpoch}";
   String uniqueReqTime() => "${DateFormat("yMddHms").format(DateTime.now())}";
@@ -45,7 +26,10 @@ class PaywayTransactionService {
           _transaction.copyWith(option: ABAPaymentOption.abapay_deeplink);
     }
     assert([ABAPaymentOption.abapay_deeplink].contains(_transaction.option));
-    Map<String, dynamic> map = _transaction.toFormDataMap();
+
+    final clientService = ABAClientFormRequestService(merchant: merchant!);
+    Map<String, dynamic> map =
+        clientService.generateCreateTransactionFormData(_transaction);
 
     var formData = FormData.fromMap(map);
     try {
@@ -86,7 +70,10 @@ class PaywayTransactionService {
       ABAPaymentOption.cards,
       ABAPaymentOption.abapay,
     ].contains(_transaction.option));
-    Map<String, dynamic> map = _transaction.toFormDataMap();
+
+    final clientService = ABAClientFormRequestService(merchant: merchant!);
+    Map<String, dynamic> map =
+        clientService.generateCreateTransactionFormData(_transaction);
 
     var parsed = Uri.tryParse(checkoutApiUrl)!;
 
@@ -101,7 +88,11 @@ class PaywayTransactionService {
       {required PaywayCheckTransaction transaction,
       bool enabledLogger = false}) async {
     var res = PaywayCheckTransactionResponse(status: 11);
-    Map<String, dynamic> map = transaction.toFormDataMap();
+
+    final clientService = ABAClientFormRequestService(merchant: merchant!);
+    Map<String, dynamic> map =
+        clientService.generateCheckTransactionFormData(transaction);
+
     var formData = FormData.fromMap(map);
 
     try {

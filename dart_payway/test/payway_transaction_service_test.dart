@@ -5,12 +5,14 @@ import 'dart:io' as io;
 
 void main() {
   group("load env and test", () {
+    late PaywayTransactionService service;
     setUpAll(() {
       io.HttpOverrides.global = null;
 
       var env = DotEnv(includePlatformEnvironment: true)..load();
 
-      PaywayTransactionService.ensureInitialized(ABAMerchant(
+      service = PaywayTransactionService(
+          merchant: ABAMerchant(
         merchantID: env['ABA_PAYWAY_MERCHANT_ID'] ?? '',
         merchantApiName: env['ABA_PAYWAY_MERCHANT_NAME'] ?? '',
         merchantApiKey: env['ABA_PAYWAY_API_KEY'] ?? '',
@@ -20,7 +22,7 @@ void main() {
     });
 
     test("create a transaction then check status pending", () async {
-      final service = PaywayTransactionService.instance!;
+
       final tranID = service.uniqueTranID();
 
       var _transaction = PaywayCreateTransaction(
@@ -58,7 +60,7 @@ void main() {
 
     test("generate checkout uri for a transaction then check status pending",
         () async {
-      final service = PaywayTransactionService.instance!;
+
       final tranID = service.uniqueTranID();
 
       var _transaction = PaywayCreateTransaction(
