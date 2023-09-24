@@ -3,6 +3,7 @@
 namespace AbaPaywayGateway\PhpPayway\services;
 
 use AbaPaywayGateway\PhpPayway\models\ABAMerchant;
+use AbaPaywayGateway\PhpPayway\models\requests\PaywayCheckTransaction;
 use AbaPaywayGateway\PhpPayway\models\requests\PaywayCreateTransaction;
 use AbaPaywayGateway\PhpPayway\models\responses\PaywayCreateTransactionResponse;
 use GuzzleHttp;
@@ -31,7 +32,9 @@ class PaywayTransactionService
     {
         try {
             $service = new ABAClientService(merchant: $this->merchant);
-            $request = $service->client->post(uri: "/purchase", options: $transaction->toMap());
+            $form_service = new ABAClientFormRequestService( merchant: $this->merchant);
+            $request_options = $form_service->generateCreateTransactionFormData(transaction: $transaction);
+            $request = $service->client->post(uri: "/purchase", options: $request_options);
             $response = GuzzleHttp\Utils::jsonDecode($request->getBody());
             $mapper = new JsonMapper();
             return $mapper->map(json: $response->data, object: new PaywayCreateTransactionResponse());
