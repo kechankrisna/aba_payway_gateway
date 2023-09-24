@@ -11,4 +11,15 @@
       </tool>
     </test_tools>
   </component>
+  <component name="PhpTestFrameworkVersionCache">
+    <tools_cache>
+      <tool tool_name="PHPUnit">
+        <cache>
+          <versions>
+            <info id="LocalD:\mylekha\frontend\mylekha_helper\aba_payway_gateway\php_payway\vendor\autoload.php" version="9.6.13" />
+          </versions>
+        </cache>
+      </tool>
+    </tools_cache>
+  </component>
 </project>

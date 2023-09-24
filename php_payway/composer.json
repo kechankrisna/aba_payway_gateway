@@ -33,7 +33,11 @@
             "AbaPaywayGateway\\PhpPayway\\": "src/"
         }
     },
-    
+    "autoload-dev": {
+        "psr-5": {
+            "Tests\\": "tests/"
+        }
+    },
     "minimum-stability": "dev",
     "prefer-stable": true
 }
