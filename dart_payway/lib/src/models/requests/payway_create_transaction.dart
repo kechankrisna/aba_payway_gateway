@@ -8,10 +8,10 @@ extension PaywayCreateTransactionExt on PaywayCreateTransaction {
     return result;
   }
 
-  String get encodedReturnUrl => EncoderService.base46_encode(returnUrl);
+  String get encodedReturnUrl => EncoderService.base64_encode(returnUrl);
 
   String get encodedItem =>
-      EncoderService.base46_encode(items.map((e) => e.toMap()).toList());
+      EncoderService.base64_encode(items.map((e) => e.toMap()).toList());
 
   String get hash {
     assert(PaywayTransactionService.instance != null);

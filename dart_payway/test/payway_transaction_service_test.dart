@@ -84,7 +84,7 @@ void main() {
 
       expect(
           webURI.queryParameters['items'],
-          EncoderService.base46_encode(
+          EncoderService.base64_encode(
               _transaction.items.map((e) => e.toMap()).toList()),
           reason: "encoded items should be equal");
 

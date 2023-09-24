@@ -3,7 +3,7 @@
 import 'dart:convert';
 
 class EncoderService {
-  static String base46_encode(Object? v) {
+  static String base64_encode(Object? v) {
     if (v == null || (v is String && v.isEmpty)) return "";
 
     List<int> value = json.encode(v).codeUnits;
@@ -12,7 +12,7 @@ class EncoderService {
     return base64Encode(bytes);
   }
 
-  static Object? base46_decode(String? v) {
+  static Object? base64_decode(String? v) {
     if (v == null || v.isEmpty) return null;
 
     final bytes = base64Decode(v);
