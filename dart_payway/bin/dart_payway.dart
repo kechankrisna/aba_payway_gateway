@@ -1,8 +1,12 @@
+import 'dart:io';
+
 import 'package:dart_payway/dart_payway.dart';
+import 'package:dotenv/dotenv.dart';
 
 void main(List<String> arguments) async {
-  Map env = {};
-  final service = PaywayTransactionService(merchant: ABAMerchant(
+  var env = DotEnv(includePlatformEnvironment: true)..load();
+  final service = PaywayTransactionService(
+      merchant: ABAMerchant(
     merchantID: env['ABA_PAYWAY_MERCHANT_ID'] ?? '',
     merchantApiName: env['ABA_PAYWAY_MERCHANT_NAME'] ?? '',
     merchantApiKey: env['ABA_PAYWAY_API_KEY'] ?? '',
@@ -35,4 +39,5 @@ void main(List<String> arguments) async {
 
   print(_transaction.amount);
   print(createResponse.status);
+  exit(0);
 }
