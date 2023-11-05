@@ -63,11 +63,11 @@ class PaywayClientService {
   /// var tranID = DateTime.now().microsecondsSinceEpoch.toString();
   /// var reqTime = DateTime.now().toUtc();
   /// var amount = 0.00;
-  /// var hash = helper.getHash(tranID: tranID, amount: amount);
+  /// var hash = helper.getStr(tranID: tranID, amount: amount);
   /// print(hash);
   /// ```
 
-  String getHash({
+  String getStr({
     required String reqTime,
     required String tranId,
     String amount = "",
@@ -100,13 +100,14 @@ class PaywayClientService {
     // return_deeplink + currency + custom_fields + return_params with public_key.
     // assert(tranID != null);
     // assert(amount != null);
-    var key = utf8.encode(merchant!.merchantApiKey);
-
-    /// var raw =
-    ///     "$reqTime ${merchant!.merchantID} $tranId $amount $items $shipping $ctid $pwt $firstName $lastName $email $phone $type $paymentOption $returnUrl $cancelUrl $continueSuccessUrl $returnDeeplink $currency $customFields $returnParams";
     var str =
         "$reqTime${merchant!.merchantID}$tranId$amount$items$shipping$ctid$pwt$firstName$lastName$email$phone$type$paymentOption$returnUrl$cancelUrl$continueSuccessUrl$returnDeeplink$currency$customFields$returnParams";
 
+    return str;
+  }
+
+  String getHash(String str) {
+    var key = utf8.encode(merchant!.merchantApiKey);
     var bytes = utf8.encode(str);
     var digest = crypto.Hmac(crypto.sha512, key).convert(bytes);
     var hash = base64Encode(digest.bytes);

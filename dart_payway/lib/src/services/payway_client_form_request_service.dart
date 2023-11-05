@@ -17,7 +17,8 @@ class PaywayClientFormRequestService {
     var encodedItem = EncoderService.base64_encode(
         transaction.items.map((e) => e.toMap()).toList());
 
-    final hash = PaywayClientService(merchant).getHash(
+    var service = PaywayClientService(merchant);
+    final str = service.getStr(
       reqTime: transaction.reqTime.toString(),
       tranId: transaction.tranId.toString(),
       amount: transaction.amount.toString(),
@@ -32,6 +33,7 @@ class PaywayClientFormRequestService {
       currency: transaction.currency.name.toString(),
       returnUrl: encodedReturnUrl.toString(),
     );
+    var hash = service.getHash(str);
 
     var map = {
       "merchant_id": merchant.merchantID.toString(),
@@ -60,7 +62,8 @@ class PaywayClientFormRequestService {
   /// allow to pre generate the correct data for form submit when send check request transaction
   ///
   generateCheckTransactionFormData(PaywayCheckTransaction transaction) {
-    final hash = PaywayClientService(merchant).getHash(
+    final service = PaywayClientService(merchant);
+    final str = service.getStr(
       reqTime: transaction.reqTime.toString(),
       tranId: transaction.tranId.toString(),
       amount: "",
@@ -75,6 +78,8 @@ class PaywayClientFormRequestService {
       currency: "",
       returnUrl: "",
     );
+    final hash = service.getHash(str);
+    
     var map = {
       "merchant_id": "${merchant.merchantID}",
       "req_time": transaction.reqTime,

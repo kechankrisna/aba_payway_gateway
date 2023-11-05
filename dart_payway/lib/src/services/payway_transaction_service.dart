@@ -56,9 +56,7 @@ class PaywayTransactionService {
 
   Future<Uri> generateTransactionCheckoutURI({
     required PaywayCreateTransaction transaction,
-    required String checkoutApiUrl,
   }) async {
-    assert(checkoutApiUrl.isNotEmpty);
     var _transaction = transaction;
     if (![PaywayPaymentOption.cards, PaywayPaymentOption.abapay]
         .contains(transaction.option)) {
@@ -70,15 +68,89 @@ class PaywayTransactionService {
       PaywayPaymentOption.abapay,
     ].contains(_transaction.option));
 
-    final clientService = PaywayClientFormRequestService(merchant: merchant);
-    Map<String, dynamic> map =
-        clientService.generateCreateTransactionFormData(_transaction);
+    final service = PaywayClientService(merchant);
+    var items = EncoderService.base64_encode(_transaction.items);
+    var str = service.getStr(
+      reqTime: _transaction.reqTime,
+      tranId: _transaction.tranId,
+      amount: _transaction.amount.toString(),
+      items: items,
+      shipping: _transaction.shipping.toString(),
 
-    var parsed = Uri.tryParse(checkoutApiUrl)!;
+      firstName: _transaction.firstname.toString(),
+      lastName: _transaction.lastname.toString(),
+      email: _transaction.email.toString(),
+      phone: _transaction.phone.toString(),
+      currency: _transaction.currency.name,
 
-    return parsed.authority.contains("https")
-        ? Uri.https(parsed.authority, parsed.path, map)
-        : Uri.http(parsed.authority, parsed.path, map);
+      /// ctid : "",
+      /// pwt : "",
+      /// type : "",
+      /// paymentOption: "",
+      /// returnUrl : "",
+      /// cancelUrl : "",
+      /// continueSuccessUrl : "",
+      /// returnDeeplink : "",
+      /// customFields : "",
+      /// returnParams : "",
+    );
+
+    /// _transaction.reqTime.toString() +
+    ///     merchant.merchantID.toString() +
+    ///     _transaction.tranId.toString() +
+    ///     _transaction.amount.toString() +
+    ///     items +
+    ///     _transaction.shipping.toString() +
+    ///     _transaction.firstname.toString() +
+    ///     _transaction.lastname +
+    ///     _transaction.email +
+    ///     _transaction.phone +
+    ///     _transaction.currency.name;
+
+    final hash = PaywayClientService(merchant).getHash(str);
+
+    final template = """
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Payway</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta name="author" content="PayWay">
+</head>
+
+<body>
+<div id="aba_main_modal" class="aba-modal">
+    <div class="aba-modal-content">
+        <form method="POST" action="${merchant.baseApiUrl}/purchase" id="aba_merchant_request">
+            <input type="hidden" name="hash" value="${hash}" id="hash"/>
+            <input type="hidden" name="tran_id" value="${_transaction.tranId}" id="tran_id"/>
+            <input type="hidden" name="amount" value="${_transaction.amount}" id="amount"/>
+            <input type="hidden" name="items" value="${items}" id="items"/>
+            <input type="hidden" name="firstname" value="${_transaction.firstname}" id="firstname" />
+            <input type="hidden" name="lastname" value="${_transaction.lastname}" id="lastname" />
+            <input type="hidden" name="phone" value="${_transaction.phone}" id="phone" /> 
+            <input type="hidden" name="email" value="${_transaction.email}" id="email" /> 
+            <input type="hidden" name="req_time" value="${_transaction.reqTime}" id="req_time" />
+            <input type="hidden" name="merchant_id" value="${merchant.merchantID}" id="merchant_id" />
+            <input type="hidden" name="shipping" value="${_transaction.shipping}" id="shipping" />
+            <input type="hidden" name="currency" value="${_transaction.currency.name}" id="currency" />
+            <input style="display: none;" type="radio" name="payment_option" value="${_transaction.option.name}" id="payment_option" />
+            <input type="hidden" name="payment_gate"  value="0" id="payment_gate" />
+        </form>
+    </div>
+</div>
+
+<script>
+    window.onload = () => document.querySelector("#aba_merchant_request").submit()
+</script>
+
+</body>
+</html>
+""";
+
+    return Uri.dataFromString(template, mimeType: "text/html");
   }
 
   /// ## [checkTransaction]

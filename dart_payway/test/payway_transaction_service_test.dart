@@ -62,11 +62,11 @@ void main() {
       final tranID = service.uniqueTranID();
 
       var _transaction = PaywayCreateTransaction(
-          amount: 6.00,
+          amount: 100.00,
           items: [
-            PaywayTransactionItem(name: "ទំនិញ 1", price: 1, quantity: 1),
-            PaywayTransactionItem(name: "ទំនិញ 2", price: 2, quantity: 1),
-            PaywayTransactionItem(name: "ទំនិញ 3", price: 3, quantity: 1),
+            PaywayTransactionItem(name: "ទំនិញ 1", price: 50, quantity: 1),
+            PaywayTransactionItem(name: "ទំនិញ 2", price: 30, quantity: 1),
+            PaywayTransactionItem(name: "ទំនិញ 3", price: 20, quantity: 1),
           ],
           reqTime: service.uniqueReqTime(),
           tranId: tranID,
@@ -74,21 +74,22 @@ void main() {
           firstname: 'Miss',
           lastname: 'My Lekha',
           phone: '010464144',
-          option: PaywayPaymentOption.abapay_deeplink,
+          option: PaywayPaymentOption.abapay,
           shipping: 0.0,
-          returnUrl: "https://stage.mylekha.app");
-      String checkoutApiUrl =
-          "http://localhost/api/v1/integrate/payway/checkout_page";
+          returnUrl: "");
+      
       var webURI = await service.generateTransactionCheckoutURI(
-          transaction: _transaction, checkoutApiUrl: checkoutApiUrl);
+          transaction: _transaction);
+      io.File('checkout.html').writeAsString(webURI.data!.contentAsString());
+      /// print(webURI);
 
-      expect(
-          webURI.queryParameters['items'],
-          EncoderService.base64_encode(
-              _transaction.items.map((e) => e.toMap()).toList()),
-          reason: "encoded items should be equal");
+      /// expect(
+      ///     webURI.queryParameters['items'],
+      ///     EncoderService.base64_encode(
+      ///         _transaction.items.map((e) => e.toMap()).toList()),
+      ///     reason: "encoded items should be equal");
 
-      expect(webURI.authority.isNotEmpty, true,
+      expect(webURI.toString().isNotEmpty, true,
           reason: "the uri should be generated");
     });
   });
