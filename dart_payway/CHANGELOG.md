@@ -1,3 +1,7 @@
+## 1.0.2
+
+- fixed generate checkout uri from client as data:type/html
+
 ## 1.0.1
 
 - test and name from ABA to Payway
