@@ -25,6 +25,6 @@ flutter:
   uses-material-design: true
 
   assets:
-    - assets/images/ic_generic.png
-    - assets/images/ic_cards.png
-    - assets/images/ic_payway.png
+    - packages/flutter_payway/assets/images/ic_generic.png
+    - packages/flutter_payway/assets/images/ic_cards.png
+    - packages/flutter_payway/assets/images/ic_payway.png
