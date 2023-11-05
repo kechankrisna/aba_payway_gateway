@@ -1,0 +1,30 @@
+name: flutter_payway
+description: This will implement dart payway for flutter project
+version: 0.0.1
+repository: https://github.com/kechankrisna/aba_payway_gateway/tree/main/dart_payway
+
+environment:
+  sdk: ">=2.19.0 <4.0.0"
+  flutter: ">=3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.2
+  dart_payway: ^1.0.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^2.0.0
+  flutter_dotenv: ^5.1.0
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/images/ic_generic.png
+    - assets/images/ic_cards.png
+    - assets/images/ic_payway.png
