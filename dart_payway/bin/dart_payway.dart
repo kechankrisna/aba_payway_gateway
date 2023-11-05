@@ -6,7 +6,7 @@ import 'package:dotenv/dotenv.dart';
 void main(List<String> arguments) async {
   var env = DotEnv(includePlatformEnvironment: true)..load();
   final service = PaywayTransactionService(
-      merchant: ABAMerchant(
+      merchant: PaywayMerchant(
     merchantID: env['ABA_PAYWAY_MERCHANT_ID'] ?? '',
     merchantApiName: env['ABA_PAYWAY_MERCHANT_NAME'] ?? '',
     merchantApiKey: env['ABA_PAYWAY_API_KEY'] ?? '',
@@ -30,7 +30,7 @@ void main(List<String> arguments) async {
       firstname: 'Miss',
       lastname: 'My Lekha',
       phone: '010464144',
-      option: ABAPaymentOption.abapay_deeplink,
+      option: PaywayPaymentOption.abapay_deeplink,
       shipping: 0.0,
       returnUrl: "https://stage.mylekha.app");
 

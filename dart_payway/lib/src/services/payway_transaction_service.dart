@@ -4,12 +4,11 @@ import 'package:dio/dio.dart';
 import 'package:intl/intl.dart';
 
 class PaywayTransactionService {
-
-  late ABAMerchant merchant;  
+  late PaywayMerchant merchant;
 
   PaywayTransactionService({required this.merchant});
 
-  ABAClientService? get helper => ABAClientService(merchant);
+  PaywayClientService? get helper => PaywayClientService(merchant);
 
   String uniqueTranID() => "${DateTime.now().microsecondsSinceEpoch}";
   String uniqueReqTime() => "${DateFormat("yMddHms").format(DateTime.now())}";
@@ -21,13 +20,13 @@ class PaywayTransactionService {
       bool enabledLogger = false}) async {
     var res = PaywayCreateTransactionResponse(status: 11);
     var _transaction = transaction;
-    if (![ABAPaymentOption.abapay_deeplink].contains(transaction.option)) {
+    if (![PaywayPaymentOption.abapay_deeplink].contains(transaction.option)) {
       _transaction =
-          _transaction.copyWith(option: ABAPaymentOption.abapay_deeplink);
+          _transaction.copyWith(option: PaywayPaymentOption.abapay_deeplink);
     }
-    assert([ABAPaymentOption.abapay_deeplink].contains(_transaction.option));
+    assert([PaywayPaymentOption.abapay_deeplink].contains(_transaction.option));
 
-    final clientService = ABAClientFormRequestService(merchant: merchant);
+    final clientService = PaywayClientFormRequestService(merchant: merchant);
     Map<String, dynamic> map =
         clientService.generateCreateTransactionFormData(_transaction);
 
@@ -50,7 +49,7 @@ class PaywayTransactionService {
     } catch (error, stacktrace) {
       print("Exception occured: $error stackTrace: $stacktrace");
       res = res.copyWith(
-          description: ABAClientService.handleResponseError(error));
+          description: PaywayClientService.handleResponseError(error));
     }
     return res;
   }
@@ -61,17 +60,17 @@ class PaywayTransactionService {
   }) async {
     assert(checkoutApiUrl.isNotEmpty);
     var _transaction = transaction;
-    if (![ABAPaymentOption.cards, ABAPaymentOption.abapay]
+    if (![PaywayPaymentOption.cards, PaywayPaymentOption.abapay]
         .contains(transaction.option)) {
-      _transaction = _transaction.copyWith(option: ABAPaymentOption.cards);
+      _transaction = _transaction.copyWith(option: PaywayPaymentOption.cards);
     }
 
     assert([
-      ABAPaymentOption.cards,
-      ABAPaymentOption.abapay,
+      PaywayPaymentOption.cards,
+      PaywayPaymentOption.abapay,
     ].contains(_transaction.option));
 
-    final clientService = ABAClientFormRequestService(merchant: merchant);
+    final clientService = PaywayClientFormRequestService(merchant: merchant);
     Map<String, dynamic> map =
         clientService.generateCreateTransactionFormData(_transaction);
 
@@ -89,7 +88,7 @@ class PaywayTransactionService {
       bool enabledLogger = false}) async {
     var res = PaywayCheckTransactionResponse(status: 11);
 
-    final clientService = ABAClientFormRequestService(merchant: merchant);
+    final clientService = PaywayClientFormRequestService(merchant: merchant);
     Map<String, dynamic> map =
         clientService.generateCheckTransactionFormData(transaction);
 
@@ -113,7 +112,7 @@ class PaywayTransactionService {
     } catch (error, stacktrace) {
       print("Exception occured: $error stackTrace: $stacktrace");
       res = res.copyWith(
-          description: ABAClientService.handleResponseError(error));
+          description: PaywayClientService.handleResponseError(error));
     }
     return res;
   }

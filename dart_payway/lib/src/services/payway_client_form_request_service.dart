@@ -1,23 +1,23 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:dart_payway/dart_payway.dart';
 
-class ABAClientFormRequestService {
-  late ABAMerchant merchant;
-  ABAClientFormRequestService({
+class PaywayClientFormRequestService {
+  late PaywayMerchant merchant;
+  PaywayClientFormRequestService({
     required this.merchant,
   });
 
   /// [generateCreateTransactionFormData]
-  /// 
+  ///
   /// allow to pre generate the correct data for form submit when send create request transaction
-  /// 
+  ///
   generateCreateTransactionFormData(PaywayCreateTransaction transaction) {
     var encodedReturnUrl = EncoderService.base64_encode(transaction.returnUrl);
 
     var encodedItem = EncoderService.base64_encode(
         transaction.items.map((e) => e.toMap()).toList());
 
-    final hash = ABAClientService(merchant).getHash(
+    final hash = PaywayClientService(merchant).getHash(
       reqTime: transaction.reqTime.toString(),
       tranId: transaction.tranId.toString(),
       amount: transaction.amount.toString(),
@@ -56,11 +56,11 @@ class ABAClientFormRequestService {
   }
 
   /// [generateCheckTransactionFormData]
-  /// 
+  ///
   /// allow to pre generate the correct data for form submit when send check request transaction
-  /// 
+  ///
   generateCheckTransactionFormData(PaywayCheckTransaction transaction) {
-    final hash = ABAClientService(merchant).getHash(
+    final hash = PaywayClientService(merchant).getHash(
       reqTime: transaction.reqTime.toString(),
       tranId: transaction.tranId.toString(),
       amount: "",

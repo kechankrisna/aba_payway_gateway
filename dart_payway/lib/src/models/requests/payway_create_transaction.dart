@@ -14,9 +14,9 @@ class PaywayCreateTransaction {
   final String? continueSuccessUrl;
   final String? returnParams;
   final double? shipping;
-  ABAPaymentOption option;
-  ABATransactionType type;
-  ABATransactionCurrency currency;
+  PaywayPaymentOption option;
+  PaywayTransactionType type;
+  PaywayTransactionCurrency currency;
 
   PaywayCreateTransaction({
     required this.tranId,
@@ -31,9 +31,9 @@ class PaywayCreateTransaction {
     this.continueSuccessUrl,
     this.returnParams,
     this.shipping,
-    this.option = ABAPaymentOption.cards,
-    this.type = ABATransactionType.purchase,
-    this.currency = ABATransactionCurrency.USD,
+    this.option = PaywayPaymentOption.cards,
+    this.type = PaywayTransactionType.purchase,
+    this.currency = PaywayTransactionCurrency.USD,
   });
 
   factory PaywayCreateTransaction.instance() {
@@ -87,11 +87,12 @@ class PaywayCreateTransaction {
       continueSuccessUrl: map['continue_success_url'] ?? '',
       returnParams: map['return_params'],
       shipping: map['shipping']?.toDouble(),
-      option:
-          $ABAPaymentOptionMap[map["payment_option"]] ?? ABAPaymentOption.cards,
-      type: $ABATransactionTypeMap[map["type"]] ?? ABATransactionType.purchase,
-      currency: $ABATransactionCurrencyMap[map["currency"]] ??
-          ABATransactionCurrency.USD,
+      option: $PaywayPaymentOptionMap[map["payment_option"]] ??
+          PaywayPaymentOption.cards,
+      type: $PaywayTransactionTypeMap[map["type"]] ??
+          PaywayTransactionType.purchase,
+      currency: $PaywayTransactionCurrencyMap[map["currency"]] ??
+          PaywayTransactionCurrency.USD,
     );
   }
 
@@ -108,9 +109,9 @@ class PaywayCreateTransaction {
     String? continueSuccessUrl,
     String? returnParams,
     double? shipping,
-    ABAPaymentOption? option,
-    ABATransactionType? type,
-    ABATransactionCurrency? currency,
+    PaywayPaymentOption? option,
+    PaywayTransactionType? type,
+    PaywayTransactionCurrency? currency,
   }) {
     return PaywayCreateTransaction(
       tranId: tranId ?? this.tranId,

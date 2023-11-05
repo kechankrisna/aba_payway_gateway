@@ -1,26 +1,33 @@
-enum ABAPaymentOption { cards, abapay, abapay_deeplink, bakong, alipay, wechat }
+enum PaywayPaymentOption {
+  cards,
+  abapay,
+  abapay_deeplink,
+  bakong,
+  alipay,
+  wechat
+}
 
-const $ABAPaymentOptionMap = const {
-  "cards": ABAPaymentOption.cards,
-  "abapay": ABAPaymentOption.abapay,
-  "abapay_deeplink": ABAPaymentOption.abapay_deeplink,
-  "bakong": ABAPaymentOption.bakong,
-  "alipay": ABAPaymentOption.alipay,
-  "wechat": ABAPaymentOption.wechat,
+const $PaywayPaymentOptionMap = {
+  "cards": PaywayPaymentOption.cards,
+  "abapay": PaywayPaymentOption.abapay,
+  "abapay_deeplink": PaywayPaymentOption.abapay_deeplink,
+  "bakong": PaywayPaymentOption.bakong,
+  "alipay": PaywayPaymentOption.alipay,
+  "wechat": PaywayPaymentOption.wechat,
 };
 
 /// acceptable currency
-enum ABATransactionCurrency { USD, KHR }
+enum PaywayTransactionCurrency { USD, KHR }
 
-const $ABATransactionCurrencyMap = {
-  'USD': ABATransactionCurrency.USD,
-  'KHR': ABATransactionCurrency.KHR,
+const $PaywayTransactionCurrencyMap = {
+  'USD': PaywayTransactionCurrency.USD,
+  'KHR': PaywayTransactionCurrency.KHR,
 };
 
 /// transaction type
-enum ABATransactionType { purchase, refund }
+enum PaywayTransactionType { purchase, refund }
 
-const $ABATransactionTypeMap = {
-  'purchase': ABATransactionType.purchase,
-  'refund': ABATransactionType.refund,
+const $PaywayTransactionTypeMap = {
+  'purchase': PaywayTransactionType.purchase,
+  'refund': PaywayTransactionType.refund,
 };

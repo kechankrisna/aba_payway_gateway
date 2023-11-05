@@ -4,21 +4,21 @@ import 'package:crypto/crypto.dart' as crypto;
 import 'package:dart_payway/dart_payway.dart';
 import 'package:dio/dio.dart';
 
-class ABAClientService {
-  final ABAMerchant? merchant;
-  ABAClientService(this.merchant);
+class PaywayClientService {
+  final PaywayMerchant? merchant;
+  PaywayClientService(this.merchant);
 
   /// [client]
   /// Return dio object for http helper
   /// ### Example:
   /// ```
-  /// var merchant = ABAMerchant();
-  /// var helper = ABAClientService(merchant);
+  /// var merchant = PaywayMerchant();
+  /// var helper = PaywayClientService(merchant);
   /// var dio = helper.getDio();
   /// ```
   Dio get client {
     Dio dio = Dio();
-    dio.options.baseUrl = merchant!.baseApiUrl!;
+    dio.options.baseUrl = merchant!.baseApiUrl;
     dio.options.connectTimeout = const Duration(seconds: 60);
     dio.options.receiveTimeout = const Duration(seconds: 60);
 
@@ -58,8 +58,8 @@ class ABAClientService {
   ///
   /// ### Example:
   /// ```
-  /// var merchant = ABAMerchant();
-  /// var helper = ABAClientHelper(merchant);
+  /// var merchant = PaywayMerchant();
+  /// var helper = PaywayClientHelper(merchant);
   /// var tranID = DateTime.now().microsecondsSinceEpoch.toString();
   /// var reqTime = DateTime.now().toUtc();
   /// var amount = 0.00;
@@ -100,7 +100,8 @@ class ABAClientService {
     // return_deeplink + currency + custom_fields + return_params with public_key.
     // assert(tranID != null);
     // assert(amount != null);
-    var key = utf8.encode(merchant!.merchantApiKey!);
+    var key = utf8.encode(merchant!.merchantApiKey);
+
     /// var raw =
     ///     "$reqTime ${merchant!.merchantID} $tranId $amount $items $shipping $ctid $pwt $firstName $lastName $email $phone $type $paymentOption $returnUrl $cancelUrl $continueSuccessUrl $returnDeeplink $currency $customFields $returnParams";
     var str =

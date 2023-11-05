@@ -12,7 +12,7 @@ void main() {
       var env = DotEnv(includePlatformEnvironment: true)..load();
 
       service = PaywayTransactionService(
-          merchant: ABAMerchant(
+          merchant: PaywayMerchant(
         merchantID: env['ABA_PAYWAY_MERCHANT_ID'] ?? '',
         merchantApiName: env['ABA_PAYWAY_MERCHANT_NAME'] ?? '',
         merchantApiKey: env['ABA_PAYWAY_API_KEY'] ?? '',
@@ -22,7 +22,6 @@ void main() {
     });
 
     test("create a transaction then check status pending", () async {
-
       final tranID = service.uniqueTranID();
 
       var _transaction = PaywayCreateTransaction(
@@ -38,7 +37,7 @@ void main() {
           firstname: 'Miss',
           lastname: 'My Lekha',
           phone: '010464144',
-          option: ABAPaymentOption.abapay_deeplink,
+          option: PaywayPaymentOption.abapay_deeplink,
           shipping: 0.0,
           returnUrl: "https://stage.mylekha.app");
 
@@ -60,7 +59,6 @@ void main() {
 
     test("generate checkout uri for a transaction then check status pending",
         () async {
-
       final tranID = service.uniqueTranID();
 
       var _transaction = PaywayCreateTransaction(
@@ -76,7 +74,7 @@ void main() {
           firstname: 'Miss',
           lastname: 'My Lekha',
           phone: '010464144',
-          option: ABAPaymentOption.abapay_deeplink,
+          option: PaywayPaymentOption.abapay_deeplink,
           shipping: 0.0,
           returnUrl: "https://stage.mylekha.app");
       String checkoutApiUrl =

@@ -1,10 +1,10 @@
-/// ## [ABAStrings]
-/// This contains every word used in aba payment
+/// ## [PaywayStrings]
+/// This contains every word used in aba payway payment
 /// ### `Example`
 /// ```
 /// Strings.checkoutLabel
 /// ```
-class ABAStrings {
+class PaywayStrings {
   static String checkoutLabel = "Checkout";
 
   static String creditOrDebitCardLabel = "Credit/Debit Card";

@@ -1,13 +1,13 @@
 import 'package:logger/logger.dart';
 
-class ABAPaywayLogger {
+class PaywayLogger {
   static Logger logger = Logger(
-    filter: ABAPaywayLogFilter(),
+    filter: PaywayLogFilter(),
     level: Logger.level,
   );
 }
 
-class ABAPaywayLogFilter extends LogFilter {
+class PaywayLogFilter extends LogFilter {
   @override
   bool shouldLog(LogEvent event) {
     return true;

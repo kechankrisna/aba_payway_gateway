@@ -1,22 +1,22 @@
 import 'enumeration.dart';
 
-extension AcceptPaymentOptionParsing on ABAPaymentOption {
+extension AcceptPaymentOptionParsing on PaywayPaymentOption {
   /// [toText] convert this enumber to text
   String get toText => toString().split(".").last;
 }
 
-extension ABAPaywayStringParsing on String {
+extension PaywayStringParsing on String {
   /// [fromText] conver text to enum AcceptPaymentOption
-  ABAPaymentOption get toAcceptPaymentOption {
+  PaywayPaymentOption get toAcceptPaymentOption {
     switch (this) {
       case "cards":
-        return ABAPaymentOption.cards;
+        return PaywayPaymentOption.cards;
       case "abapay":
-        return ABAPaymentOption.abapay;
+        return PaywayPaymentOption.abapay;
       case "abapay_deeplink":
-        return ABAPaymentOption.abapay_deeplink;
+        return PaywayPaymentOption.abapay_deeplink;
       default:
-        return ABAPaymentOption.cards;
+        return PaywayPaymentOption.cards;
     }
   }
 }

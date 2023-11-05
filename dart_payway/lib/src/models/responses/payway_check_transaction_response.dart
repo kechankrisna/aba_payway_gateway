@@ -10,7 +10,7 @@ class PaywayCheckTransactionResponse {
   final DateTime? datetime;
 
   ///
-  final ABATransactionCurrency? originalCurrency;
+  final PaywayTransactionCurrency? originalCurrency;
   final List<Map<dynamic, dynamic>>? payout;
 
   final String? tranId;
@@ -68,8 +68,9 @@ class PaywayCheckTransactionResponse {
       totalAmount: map['total_amount']?.toDouble(),
       apv: map['apv'] ?? '',
       paymentStatus: map['payment_status'] ?? '',
-      datetime: map['datetime'] == null ? null : DateTime.tryParse(map['datetime']),
-      originalCurrency: $ABATransactionCurrencyMap[map['original_currency']],
+      datetime:
+          map['datetime'] == null ? null : DateTime.tryParse(map['datetime']),
+      originalCurrency: $PaywayTransactionCurrencyMap[map['original_currency']],
       payout: map['payout'] != null
           ? List<Map<dynamic, dynamic>>.from(map['payout'])
           : null,
@@ -90,7 +91,7 @@ class PaywayCheckTransactionResponse {
     String? apv,
     String? paymentStatus,
     DateTime? datetime,
-    ABATransactionCurrency? originalCurrency,
+    PaywayTransactionCurrency? originalCurrency,
     List<Map<dynamic, dynamic>>? payout,
     String? tranId,
     String? firstname,
