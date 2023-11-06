@@ -4,7 +4,8 @@ namespace PhpPayway\Services;
 
 use PhpPayway\Models\PaywayMerchant;
 use PhpPayway\Models\Requests\PaywayCreateTransaction;
-use PhpPayway\Services\PaywayClientService;
+use PhpPayway\Models\Requests\PaywayCheckTransaction;
+
 
 class PaywayClientFormRequestService
 {
@@ -55,4 +56,34 @@ class PaywayClientFormRequestService
             "currency" => $transaction->currency->name,
         ];
     }
+
+    public function generateCheckTransactionFormData(PaywayCheckTransaction $transaction): array
+    {
+        $service = (new PaywayClientService($this->merchant));
+        $str = $service->getStr(
+            req_time: $transaction->req_time,
+            tran_id: $transaction->tran_id,
+            amount: "",
+            items: "",
+            shipping: "",
+            firstname: "",
+            lastname: "",
+            email: "",
+            phone: "",
+            type: "",
+            payment_option: "",
+            currency: "",
+            return_url: "",
+        );
+
+        $hash = $service->getHash($str);
+
+        return [
+            "merchant_id" => $this->merchant->merchantID,
+            "req_time" => $transaction -> req_time,
+            "tran_id" => $transaction -> tran_id,
+            "hash" => $hash,
+        ];
+
+  }
 }
