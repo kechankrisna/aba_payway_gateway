@@ -4,6 +4,7 @@ import 'package:dart_payway_partner/dart_payway_partner.dart';
 import 'package:dio/dio.dart';
 import 'package:encrypt/encrypt.dart';
 import 'package:encrypt/encrypt_io.dart';
+import 'package:intl/intl.dart';
 import 'package:test/test.dart';
 import 'package:dotenv/dotenv.dart';
 import 'dart:io' as io;
@@ -35,11 +36,12 @@ void main() {
         'pushback_url': 'https://www.mylekha.org/',
         'redirect_url': 'https://www.mylekha.org/',
         'type': 0,
-        'register_ref': DateTime.now().millisecond.toString()
+        'register_ref': "Merchant002"
       };
       var requestData = PaywayPartnerRegisterMerchant.fromMap(json);
       var reqService =
           PaywayPartnerClientFormRequestService(partner: service.partner);
+
       var map = reqService.generateRegisterMerchantFormData(requestData);
       print(map);
       var formData = FormData.fromMap(map);
@@ -54,28 +56,36 @@ void main() {
       }
     });
 
+    test("test date", () {
+      var errtime = "2023110615173";
+
+      /// var t = DateTime.tryParse(errtime + "0")!;
+      var r = DateFormat("yMddhhmmss").format(DateTime.now());
+      print(errtime.length);
+      print(r.length);
+      print(r);
+    });
+
     test("test generated encode", () {
       var data = {
-        'pushback_url':
-            'https://www.mylekha.org/api/intergration/payway/success',
-        'redirect_url': 'https://www.mylekha.org/',
+        'pushback_url': 'https://www.mylekha.org/',
+        'redirect_url': 'https://www.mylekha.org',
         'type': 0,
-        'register_ref': 'Merchant001'
+        'register_ref': 'Merchant001',
       };
+      /// var requestData = PaywayPartnerRegisterMerchant.fromMap(data);
+      /// var reqService =
+      ///     PaywayPartnerClientFormRequestService(partner: service.partner);
+      var encypted = PaywayPartnerClientFormRequestService.opensslEncrypt(
+          data, service.partner.partnerPublicKey);
+      print(encypted);
+      var decryped = PaywayPartnerClientFormRequestService.opensslDecrypt(
+          encypted, service.partner.partnerPrivateKey);
+      print(decryped);
 
-      /// var requestData =
-      ///     ABAPartnerClientFormRequestService(partner: service.partner)
-      ///         .based64EncodedRequestData(data);
+      /// var output = reqService.generateRegisterMerchantFormData(requestData);
 
-      /// print(requestData);
-      ///
-
-      var requestData = PaywayPartnerRegisterMerchant.fromMap(data);
-      var reqService =
-          PaywayPartnerClientFormRequestService(partner: service.partner);
-      var output = reqService.generateRegisterMerchantFormData(requestData);
-
-      print(output);
+      /// print(output);
     });
 
     test("test", () async {

@@ -66,7 +66,7 @@ class PaywayPartnerClientService {
     required String request_data,
   }) {
     // String =
-    // partner_id + request_data + req_time + public_key
+    // partner_id + request_data + req_time 
     assert(partner != null);
     var str = "${partner!.partnerID}$request_data$request_time";
 
@@ -77,7 +77,7 @@ class PaywayPartnerClientService {
     var key = utf8.encode(partner!.partnerKey);
     var bytes = utf8.encode(str);
     var digest = crypto.Hmac(crypto.sha256, key).convert(bytes);
-    var hash = base64Encode(digest.bytes);
+    var hash = digest.toString();
     return hash;
   }
 
