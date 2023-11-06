@@ -1,4 +1,10 @@
 # https://dart.dev/guides/libraries/private-files
 # Created by `dart pub`
 .dart_tool/
-.env
+*.env
+example/windows
+example/android
+example/ios
+example/macos
+example/web
+example/linux
