@@ -1,18 +1,21 @@
-`ABA Payway in Dart`
+`Payway in Dart`
+
+## PaywayTransactionService is required
+```dart
+var service = PaywayTransactionService(
+          merchant: PaywayMerchant(
+        merchantID: env['ABA_PAYWAY_MERCHANT_ID'] ?? '',
+        merchantApiName: env['ABA_PAYWAY_MERCHANT_NAME'] ?? '',
+        merchantApiKey: env['ABA_PAYWAY_API_KEY'] ?? '',
+        baseApiUrl: env['ABA_PAYWAY_API_URL'] ?? '',
+        refererDomain: "http://mylekha.app",
+      ));
+
+```
 
 ### Create Transaction Example
 ```dart
-Map env = {};
-  PaywayTransactionService.ensureInitialized(PaywayMerchant(
-    merchantID: env['ABA_PAYWAY_MERCHANT_ID'] ?? '',
-    merchantApiName: env['ABA_PAYWAY_MERCHANT_NAME'] ?? '',
-    merchantApiKey: env['ABA_PAYWAY_API_KEY'] ?? '',
-    baseApiUrl: env['ABA_PAYWAY_API_URL'] ?? '',
-    refererDomain: "http://mylekha.app",
-  ));
-
   /// create transaction
-  final service = PaywayTransactionService.instance!;
   final tranID = service.uniqueTranID();
 
   var _transaction = PaywayCreateTransaction(
@@ -42,7 +45,6 @@ Map env = {};
 
 ### Generate checkout uri for backend
 ```dart
-final service = PaywayTransactionService.instance!;
       final tranID = service.uniqueTranID();
 
       var _transaction = PaywayCreateTransaction(
@@ -61,9 +63,7 @@ final service = PaywayTransactionService.instance!;
           option: PaywayPaymentOption.abapay_deeplink,
           shipping: 0.0,
           returnUrl: "https://mylekha.app");
-      String checkoutApiUrl =
-          "http://localhost/api/v1/integrate/payway/checkout_page";
       var webURI = await service.generateTransactionCheckoutURI(
-          transaction: _transaction, checkoutApiUrl: checkoutApiUrl);
+          transaction: _transaction);
 
 ```

@@ -11,7 +11,7 @@ class PaywayTransactionService {
   PaywayClientService? get helper => PaywayClientService(merchant);
 
   String uniqueTranID() => "${DateTime.now().microsecondsSinceEpoch}";
-  String uniqueReqTime() => "${DateFormat("yMddHms").format(DateTime.now())}";
+  String uniqueReqTime() => "${DateFormat("yMddhhmmss").format(DateTime.now())}";
 
   /// ## [createTransaction]
   /// create a new trasaction
