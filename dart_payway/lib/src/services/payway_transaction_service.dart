@@ -11,10 +11,39 @@ class PaywayTransactionService {
   PaywayClientService? get helper => PaywayClientService(merchant);
 
   String uniqueTranID() => "${DateTime.now().microsecondsSinceEpoch}";
-  String uniqueReqTime() => "${DateFormat("yMddhhmmss").format(DateTime.now())}";
+  String uniqueReqTime() =>
+      "${DateFormat("yMddhhmmss").format(DateTime.now())}";
 
   /// ## [createTransaction]
+  ///
   /// create a new trasaction
+  ///
+  /// `transaction`: this information is required
+  ///
+  /// Usage:
+  ///
+  /// ```dart
+  /// 
+  /// var _transaction = PaywayCreateTransaction(
+  ///     amount: 6.00,
+  ///     items: [
+  ///       PaywayTransactionItem(name: "ទំនិញ 1", price: 1, quantity: 1),
+  ///       PaywayTransactionItem(name: "ទំនិញ 2", price: 2, quantity: 1),
+  ///       PaywayTransactionItem(name: "ទំនិញ 3", price: 3, quantity: 1),
+  ///     ],
+  ///     reqTime: service.uniqueReqTime(),
+  ///     tranId: service.uniqueTranID(),
+  ///     email: 'support@mylekha.app',
+  ///     firstname: 'Miss',
+  ///     lastname: 'My Lekha',
+  ///     phone: '010464144',
+  ///     option: PaywayPaymentOption.abapay_deeplink,
+  ///     shipping: 0.0,
+  ///     returnUrl: "https://stage.mylekha.app");
+  ///
+  /// var createResponse = await service.createTransaction(transaction: _transaction);
+  ///
+  /// ```
   Future<PaywayCreateTransactionResponse> createTransaction(
       {required PaywayCreateTransaction transaction,
       bool enabledLogger = false}) async {
@@ -54,6 +83,36 @@ class PaywayTransactionService {
     return res;
   }
 
+  /// ## [generateTransactionCheckoutURI]
+  ///
+  /// generate the html weburi
+  ///
+  /// `transaction`: is requied to generate the html weburi
+  ///
+  /// Usage
+  ///
+  /// ```dart
+  /// 
+  /// var _transaction = PaywayCreateTransaction(
+  ///     amount: 100.00,
+  ///     items: [
+  ///       PaywayTransactionItem(name: "ទំនិញ 1", price: 50, quantity: 1),
+  ///       PaywayTransactionItem(name: "ទំនិញ 2", price: 30, quantity: 1),
+  ///       PaywayTransactionItem(name: "ទំនិញ 3", price: 20, quantity: 1),
+  ///     ],
+  ///     reqTime: service.uniqueReqTime(),
+  ///     tranId: service.uniqueTranID(),
+  ///     email: 'support@mylekha.app',
+  ///     firstname: 'Miss',
+  ///     lastname: 'My Lekha',
+  ///     phone: '010464144',
+  ///     option: PaywayPaymentOption.abapay,
+  ///     shipping: 0.0,
+  ///     returnUrl: "");
+  /// 
+  /// var webURI = await service.generateTransactionCheckoutURI(transaction: _transaction);
+  ///
+  /// ```
   Future<Uri> generateTransactionCheckoutURI({
     required PaywayCreateTransaction transaction,
   }) async {
