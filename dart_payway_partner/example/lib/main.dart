@@ -55,6 +55,29 @@ class _MyHomePageState extends State<MyHomePage> {
     super.initState();
   }
 
+  Future<void> registerMerchant() async {
+    final merchant = PaywayPartnerRegisterMerchant(
+      pushback_url: 'https://www.mylekha.org/',
+      redirect_url: 'https://www.mylekha.org/',
+      type: 0,
+      register_ref: referer_id,
+    );
+    try {
+      var registerResponse = await service.registerMerchant(merchant: merchant);
+      debugPrint(registerResponse.toJson());
+    } catch (e) {}
+  }
+
+  Future<void> checkMerchant() async {
+    final merchant = PaywayPartnerCheckMerchant(
+      register_ref: referer_id,
+    );
+    try {
+      var checkResponse = await service.checkMerchant(merchant: merchant);
+      debugPrint(checkResponse.toJson());
+    } catch (e) {}
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,32 +90,8 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             TextButton(
-                onPressed: () async {
-                  final merchant = PaywayPartnerRegisterMerchant(
-                    pushback_url: 'https://www.mylekha.org/',
-                    redirect_url: 'https://www.mylekha.org/',
-                    type: 0,
-                    register_ref: referer_id,
-                  );
-                  try {
-                    var registerResponse =
-                        await service.registerMerchant(merchant: merchant);
-                    debugPrint(registerResponse.toJson());
-                  } catch (e) {}
-                },
-                child: Text("register merchant")),
-            TextButton(
-                onPressed: () async {
-                  final merchant = PaywayPartnerCheckMerchant(
-                    register_ref: referer_id,
-                  );
-                  try {
-                    var checkResponse =
-                        await service.checkMerchant(merchant: merchant);
-                    debugPrint(checkResponse.toJson());
-                  } catch (e) {}
-                },
-                child: Text("check merchant"))
+                onPressed: registerMerchant, child: Text("register merchant")),
+            TextButton(onPressed: checkMerchant, child: Text("check merchant"))
           ],
         ),
       ),
