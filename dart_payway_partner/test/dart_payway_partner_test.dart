@@ -48,9 +48,31 @@ void main() {
       final client = PaywayPartnerClientService(service.partner).client;
       client.interceptors.add(dioLoggerInterceptor);
       try {
-        Response response = await client.post("/new-merchant", data: formData);
+        var registerResponse =
+            await client.post("/new-merchant", data: formData);
 
-        print(response);
+        print(registerResponse);
+      } catch (e) {
+        print(e as DioException);
+      }
+    });
+
+    test("test check merchant", () async {
+      var json = {'register_ref': "Merchant002"};
+      var requestData = PaywayPartnerCheckMerchant.fromMap(json);
+      var reqService =
+          PaywayPartnerClientFormRequestService(partner: service.partner);
+
+      var map = reqService.generateCheckMerchantFormData(requestData);
+      print(map);
+      var formData = FormData.fromMap(map);
+      final client = PaywayPartnerClientService(service.partner).client;
+      client.interceptors.add(dioLoggerInterceptor);
+      try {
+        var checkResponse =
+            await client.post("/get-mc-credential-info", data: formData);
+
+        print(checkResponse);
       } catch (e) {
         print(e as DioException);
       }
@@ -83,7 +105,6 @@ void main() {
       expect(data, decryped,
           reason:
               "by using encrypted data, so decrypted result should be equal data");
-
     });
 
     test("test", () async {

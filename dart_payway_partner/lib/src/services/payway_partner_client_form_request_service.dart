@@ -20,7 +20,7 @@ class PaywayPartnerClientFormRequestService {
   Map<String, dynamic> generateRegisterMerchantFormData(
       PaywayPartnerRegisterMerchant requestData,
       {String? requestTime}) {
-    var encodedRequestData =
+    var request_data =
         opensslEncrypt(requestData.toMap(), partner.partnerPublicKey);
 
     final _requestTime =
@@ -34,12 +34,45 @@ class PaywayPartnerClientFormRequestService {
 
     final clientService = PaywayPartnerClientService(partner);
     final str = clientService.getStr(
-        request_time: _requestTime, request_data: encodedRequestData);
+        request_time: _requestTime, request_data: request_data);
     final hash = clientService.getHash(str);
 
     var map = {
       "request_time": _requestTime.toString(),
-      "request_data": encodedRequestData.toString(),
+      "request_data": request_data.toString(),
+      "partner_id": partner.partnerID.toString(),
+      "hash": hash.toString(),
+    };
+    return map;
+  }
+
+  /// [generateCheckMerchantFormData]
+  ///
+  /// allow to pre generate the correct data for form submit when send create request check merchant info
+  ///
+  Map<String, dynamic> generateCheckMerchantFormData(
+      PaywayPartnerCheckMerchant requestData,
+      {String? requestTime}) {
+    final request_data =
+        opensslEncrypt(requestData.toMap(), partner.partnerPublicKey);
+
+    final _requestTime =
+        requestTime ?? DateFormat("yMddhhmmss").format(DateTime.now());
+    if (_requestTime.length != 14) {
+      print("_requestTime $_requestTime");
+    }
+
+    /// show the error if incorrect request time format size
+    assert(_requestTime.length == 14);
+
+    final clientService = PaywayPartnerClientService(partner);
+    final str = clientService.getStr(
+        request_time: _requestTime, request_data: request_data);
+    final hash = clientService.getHash(str);
+
+    var map = {
+      "request_time": _requestTime.toString(),
+      "request_data": request_data.toString(),
       "partner_id": partner.partnerID.toString(),
       "hash": hash.toString(),
     };
