@@ -61,20 +61,22 @@ class PaywayPartnerClientService {
   /// var hash = helper.getHash(request_time: request_time, request_data: request_data);
   /// print(hash);
   /// ```
-
-  String getHash({
+  String getStr({
     required String request_time,
     required String request_data,
   }) {
     // String =
     // partner_id + request_data + req_time + public_key
     assert(partner != null);
-    var key = utf8.encode(partner!.partnerKey);
     var str = "${partner!.partnerID}$request_data$request_time";
-    print("str: $str\n");
 
+    return str;
+  }
+
+  String getHash(String str) {
+    var key = utf8.encode(partner!.partnerKey);
     var bytes = utf8.encode(str);
-    var digest = crypto.Hmac(crypto.sha512, key).convert(bytes);
+    var digest = crypto.Hmac(crypto.sha256, key).convert(bytes);
     var hash = base64Encode(digest.bytes);
     return hash;
   }

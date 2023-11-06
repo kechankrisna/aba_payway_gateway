@@ -32,11 +32,10 @@ void main() {
 
     test("test register merchant", () async {
       var json = {
-        'pushback_url':
-            'https://www.mylekha.org/api/intergration/payway/success',
+        'pushback_url': 'https://www.mylekha.org/',
         'redirect_url': 'https://www.mylekha.org/',
         'type': 0,
-        'register_ref': 'Merchant001'
+        'register_ref': DateTime.now().millisecond.toString()
       };
       var requestData = PaywayPartnerRegisterMerchant.fromMap(json);
       var reqService =

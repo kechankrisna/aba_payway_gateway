@@ -23,10 +23,10 @@ class PaywayPartnerClientFormRequestService {
 
     final _requestTime =
         requestTime ?? DateFormat("yMddHms").format(DateTime.now());
-    final hash = PaywayPartnerClientService(partner).getHash(
-      request_time: _requestTime,
-      request_data: encodedRequestData,
-    );
+    final clientService = PaywayPartnerClientService(partner);
+    final str = clientService.getStr(
+        request_time: _requestTime, request_data: encodedRequestData);
+    final hash = clientService.getHash(str);
 
     var map = {
       "request_time": _requestTime.toString(),
