@@ -7,19 +7,13 @@ use DateTime;
 class PaywayCheckTransactionResponse
 {
 
-    public function __construct(
-        public int       $status,
-        public string    $description,
-        public float     $amount,
-        public string    $apv,
-        public string    $payment_status,
-        public ?float    $total_amount = null,
-        public ?DateTime $datetime = null,
-
-    )
-    {
-
-    }
+    public int $status;
+    public string $description;
+    public float $amount;
+    public string $apv;
+    public string $payment_status;
+    public ?float $total_amount = null;
+    public ?DateTime $datetime = null;
 
 
     public function copyWith(

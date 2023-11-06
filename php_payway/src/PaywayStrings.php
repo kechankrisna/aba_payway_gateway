@@ -1,6 +1,6 @@
 <?php
 
-namespace AbaPaywayGateway\PhpPayway;
+namespace PhpPayway;
 
 class PaywayStrings
 {
