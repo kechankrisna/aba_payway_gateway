@@ -1,10 +1,6 @@
 import 'dart:convert';
-
 import 'package:dart_payway_partner/dart_payway_partner.dart';
-import 'package:dio/dio.dart';
 import 'package:encrypt/encrypt.dart';
-import 'package:encrypt/encrypt_io.dart';
-import 'package:intl/intl.dart';
 import 'package:test/test.dart';
 import 'package:dotenv/dotenv.dart';
 import 'dart:io' as io;
@@ -31,62 +27,49 @@ void main() {
       ));
     });
 
-    test("test register merchant", () async {
-      var json = {
-        'pushback_url': 'https://www.mylekha.org/',
-        'redirect_url': 'https://www.mylekha.org/',
-        'type': 0,
-        'register_ref': "Merchant002"
-      };
-      var requestData = PaywayPartnerRegisterMerchant.fromMap(json);
-      var reqService =
-          PaywayPartnerClientFormRequestService(partner: service.partner);
+    test(
+      "test register a new merchant and status should be success",
+      () async {
+        final merchant = PaywayPartnerRegisterMerchant(
+          pushback_url: 'https://www.mylekha.org/',
+          redirect_url: 'https://www.mylekha.org/',
+          type: 0,
+          register_ref: "Merchant003",
+        );
 
-      var map = reqService.generateRegisterMerchantFormData(requestData);
-      print(map);
-      var formData = FormData.fromMap(map);
-      final client = PaywayPartnerClientService(service.partner).client;
-      client.interceptors.add(dioLoggerInterceptor);
-      try {
         var registerResponse =
-            await client.post("/new-merchant", data: formData);
+            await service.registerMerchant(merchant: merchant);
 
-        print(registerResponse);
-      } catch (e) {
-        print(e as DioException);
-      }
-    });
+        expect(
+            registerResponse.url.isNotEmpty &&
+                registerResponse.token.isNotEmpty,
+            true,
+            reason: "the url and token should be exist according to docs");
 
-    test("test check merchant", () async {
-      var json = {'register_ref': "Merchant002"};
-      var requestData = PaywayPartnerCheckMerchant.fromMap(json);
-      var reqService =
-          PaywayPartnerClientFormRequestService(partner: service.partner);
+        expect(
+            registerResponse.status.tran_id!.isNotEmpty &&
+                registerResponse.status.code.isNotEmpty &&
+                registerResponse.status.message.isNotEmpty,
+            true,
+            reason:
+                "the status.tran_id,  status.code, status.message should be a string according to docs");
+      },
+    );
 
-      var map = reqService.generateCheckMerchantFormData(requestData);
-      print(map);
-      var formData = FormData.fromMap(map);
-      final client = PaywayPartnerClientService(service.partner).client;
-      client.interceptors.add(dioLoggerInterceptor);
-      try {
-        var checkResponse =
-            await client.post("/get-mc-credential-info", data: formData);
+    test(
+      "test check a new registered merchant status and expect to see no merchant not found",
+      () async {
+        final merchant = PaywayPartnerCheckMerchant(
+          register_ref: "Merchant003",
+        );
 
-        print(checkResponse);
-      } catch (e) {
-        print(e as DioException);
-      }
-    });
+        var checkResponse = await service.checkMerchant(merchant: merchant);
 
-    test("test date", () {
-      var errtime = "2023110615173";
-
-      /// var t = DateTime.tryParse(errtime + "0")!;
-      var r = DateFormat("yMddhhmmss").format(DateTime.now());
-      print(errtime.length);
-      print(r.length);
-      print(r);
-    });
+        expect(checkResponse.data.isEmpty, true,
+            reason:
+                "the data should be empty while user not yet complet info according to docs");
+      },
+    );
 
     test("test encypted and decryped", () {
       Map<String, dynamic> data = {
