@@ -1,8 +1,8 @@
 <?php
 
-namespace AbaPaywayGateway\PhpPayway\models;
+namespace PhpPayway\Models;
 
-class ABAMerchant
+class PaywayMerchant
 {
     public function __construct(
         public string $merchantID,

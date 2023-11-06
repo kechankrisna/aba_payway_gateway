@@ -1,24 +1,31 @@
 <?php
 
-namespace AbaPaywayGateway\PhpPayway\services;
+namespace PhpPayway\Services;
 
-use AbaPaywayGateway\PhpPayway\models\ABAMerchant;
+use PhpPayway\Models\PaywayMerchant;
 use GuzzleHttp;
 use GuzzleHttp\Client;
 
-class ABAClientService
+class PaywayClientService
 {
     public Client $client;
 
-    public function __construct(public ABAMerchant $merchant)
+    public function __construct(public PaywayMerchant $merchant)
     {
-        $headers = ['Referer' => $this->merchant->refererDomain];
         $this->client = new GuzzleHttp\Client([
-            'headers' => $headers
+            'base_uri' => $this->merchant->baseApiUrl,
+            'headers' => [
+                'Referer' => $this->merchant->refererDomain,
+                'Accept' => 'application/json',
+            ],
+            'request.options' => [
+                'timeout' => 60,
+                'connect_timeout' => 60
+            ]
         ]);
     }
 
-    function getHash(
+    function getStr(
         string $req_time,
         string $tran_id,
         string $amount = "",
@@ -53,6 +60,11 @@ class ABAClientService
         // assert(tranID != null);
         // assert(amount != null);
         $str = $req_time . $this->merchant->merchantID . $tran_id . $amount . $items . $shipping . $ctid . $pwt . $firstname . $lastname . $email . $phone . $type . $payment_option . $return_url . $cancel_url . $continue_success_url . $return_deeplink . $currency . $custom_fields . $return_params;
+        return $str;
+    }
+
+    function getHash(String $str): string
+    {
         $hash = base64_encode(hash_hmac('sha512', $str, $this->merchant->merchantApiKey, true));
         return $hash;
     }

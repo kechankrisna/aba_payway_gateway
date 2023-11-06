@@ -1,29 +1,37 @@
 <?php
 
-use AbaPaywayGateway\PhpPayway\enumeration\ABAPaymentOption;
-use AbaPaywayGateway\PhpPayway\enumeration\ABATransactionType;
-use AbaPaywayGateway\PhpPayway\enumeration\ABATransactionCurrency;
-use \AbaPaywayGateway\PhpPayway\services;
-use \AbaPaywayGateway\PhpPayway\models;
-use \AbaPaywayGateway\PhpPayway\services\ABAClientFormRequestService;
+use PhpPayway\Enumeration\PaywayPaymentOption;
+use PhpPayway\Enumeration\PaywayTransactionType;
+use PhpPayway\enumeration\PaywayTransactionCurrency;
+use PhpPayway\Models\PaywayMerchant;
+use PhpPayway\Models\requests\PaywayCreateTransaction;
+use PhpPayway\Models\Requests\PaywayTransactionItem;
+use PhpPayway\Services\PaywayClientFormRequestService;
+use PhpPayway\Services\PaywayTransactionService;
 
 uses()->group('PaywayTransactionService');
 
 test('', function () {
+    $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+    $dotenv->load();
 
-    $merchant = new models\ABAMerchant(
-
+    $merchant = new PaywayMerchant(
+        merchantID:  $_ENV['ABA_PAYWAY_MERCHANT_ID'] ?? '',
+        merchantApiName: $_ENV['ABA_PAYWAY_MERCHANT_NAME'] ?? '',
+        merchantApiKey: $_ENV['ABA_PAYWAY_API_KEY'] ?? '',
+        baseApiUrl: $_ENV['ABA_PAYWAY_API_URL'] ?? '',
+        refererDomain: "http://mylekha.app",
     );
 
-    $service = new services\PaywayTransactionService(merchant: $merchant);
+    $service = new PaywayTransactionService(merchant: $merchant);
 
     $tran_id = $service->uniqueTranID();
     $items = [
-        new models\requests\PaywayTransactionItem(name: "ទំនិញ 1", quantity: 1, price: 1,),
-        new models\requests\PaywayTransactionItem(name: "ទំនិញ 2", quantity: 1, price: 2,),
-        new models\requests\PaywayTransactionItem(name: "ទំនិញ 3", quantity: 1, price: 3,),
+        new PaywayTransactionItem(name: "ទំនិញ 1", quantity: 1, price: 1,),
+        new PaywayTransactionItem(name: "ទំនិញ 2", quantity: 1, price: 2,),
+        new PaywayTransactionItem(name: "ទំនិញ 3", quantity: 1, price: 3,),
     ];
-    $transaction = new models\requests\PaywayCreateTransaction(
+    $transaction = new PaywayCreateTransaction(
         tran_id: $tran_id,
         req_time: $service->uniqueReqTime(),
         amount: 6.00,
@@ -32,20 +40,20 @@ test('', function () {
         lastname: 'My Lekha',
         phone: '010464144',
         email: 'support@mylekha.app',
-        option: ABAPaymentOption::abapay_deeplink,
-        type: ABATransactionType::purchase,
-        currency: ABATransactionCurrency::USD,
+        option: PaywayPaymentOption::abapay_deeplink,
+        type: PaywayTransactionType::purchase,
+        currency: PaywayTransactionCurrency::USD,
         return_url: "https://stage.mylekha.app",
         shipping: 0.0,
-
     );
-    $form_service = new ABAClientFormRequestService(merchant: $merchant);
+    $form_service = new PaywayClientFormRequestService(merchant: $merchant);
     $request_options = $form_service->generateCreateTransactionFormData(transaction: $transaction);
 
-    echo '<pre>'; print_r($request_options); echo '</pre>';
+//    dd($request_options);
 
-//    $createResponse =
-//        $service->createTransaction(transaction: $transaction);
+    $createResponse = $service->createTransaction(transaction: $transaction);
+
+    dd($createResponse);
 
 
 })->group("PaywayTransactionService");

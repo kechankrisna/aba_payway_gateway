@@ -1,22 +1,24 @@
 <?php
 
-namespace AbaPaywayGateway\PhpPayway\services;
+namespace PhpPayway\Services;
 
-use AbaPaywayGateway\PhpPayway\models\ABAMerchant;
-use AbaPaywayGateway\PhpPayway\models\requests\PaywayCreateTransaction;
+use PhpPayway\Models\PaywayMerchant;
+use PhpPayway\Models\Requests\PaywayCreateTransaction;
+use PhpPayway\Services\PaywayClientService;
 
-class ABAClientFormRequestService
+class PaywayClientFormRequestService
 {
-    public function __construct(public ABAMerchant $merchant)
+    public function __construct(public PaywayMerchant $merchant)
     {
 
     }
 
     public function generateCreateTransactionFormData(PaywayCreateTransaction $transaction): array
     {
-        $encodedItem = EncoderService::base64_encode($transaction->items);
         $encoded_return_url = EncoderService::base64_encode($transaction->return_url);
-        $hash = (new ABAClientService($this->merchant))->getHash(
+        $encodedItem = EncoderService::base64_encode($transaction->items);
+        $service = (new PaywayClientService($this->merchant));
+        $str = $service->getStr(
             req_time: $transaction->req_time,
             tran_id: $transaction->tran_id,
             amount: $transaction->amount,
@@ -31,6 +33,7 @@ class ABAClientFormRequestService
             currency: $transaction->currency->name,
             return_url: $encoded_return_url,
         );
+        $hash = $service->getHash($str);
 
         return [
             "merchant_id" => $this->merchant->merchantID,

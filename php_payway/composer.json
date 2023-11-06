@@ -30,7 +30,7 @@
     },
     "autoload": {
         "psr-4": {
-            "AbaPaywayGateway\\PhpPayway\\": "src/"
+            "PhpPayway\\": "src/"
         }
     },
     "autoload-dev": {

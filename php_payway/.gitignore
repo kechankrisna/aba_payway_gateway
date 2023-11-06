@@ -5,7 +5,7 @@
 /storage/*.key
 /storage/temp
 /vendor
-.env
+tests/.env
 .env.backup
 .phpunit.result.cache
 Homestead.json
@@ -26,3 +26,4 @@ composer.lock
 *supervisor.pid
 .data/*
 /dump
+*.env

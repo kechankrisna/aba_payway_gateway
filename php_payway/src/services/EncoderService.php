@@ -1,6 +1,6 @@
 <?php
 
-namespace AbaPaywayGateway\PhpPayway\services;
+namespace PhpPayway\Services;
 
 class EncoderService
 {

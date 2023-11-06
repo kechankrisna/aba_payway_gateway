@@ -1,8 +1,8 @@
 <?php
 
-namespace AbaPaywayGateway\PhpPayway\enumeration;
+namespace PhpPayway\Enumeration;
 
-enum ABATransactionType
+enum PaywayTransactionType
 {
     case purchase;
     case refund;

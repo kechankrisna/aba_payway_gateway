@@ -1,8 +1,8 @@
 <?php
 
-namespace AbaPaywayGateway\PhpPayway\enumeration;
+namespace PhpPayway\Enumeration;
 
-enum ABAPaymentOption
+enum PaywayPaymentOption
 {
     case cards;
     case abapay;

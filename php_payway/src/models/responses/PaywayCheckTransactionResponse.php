@@ -1,6 +1,6 @@
 <?php
 
-namespace AbaPaywayGateway\PhpPayway\models\responses;
+namespace PhpPayway\Models\Responses;
 
 use DateTime;
 

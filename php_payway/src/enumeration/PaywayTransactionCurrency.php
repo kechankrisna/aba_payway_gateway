@@ -1,8 +1,8 @@
 <?php
 
-namespace AbaPaywayGateway\PhpPayway\enumeration;
+namespace PhpPayway\Enumeration;
 
-enum ABATransactionCurrency
+enum PaywayTransactionCurrency
 {
     case USD;
     case KHR;

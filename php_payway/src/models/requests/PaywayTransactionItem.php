@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace AbaPaywayGateway\PhpPayway\models\requests;
+namespace PhpPayway\Models\Requests;
 
 class PaywayTransactionItem
 {

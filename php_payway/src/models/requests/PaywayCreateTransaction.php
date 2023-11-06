@@ -1,11 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace AbaPaywayGateway\PhpPayway\models\requests;
+namespace PhpPayway\Models\Requests;
 
-use AbaPaywayGateway\PhpPayway\enumeration\ABATransactionCurrency;
-use AbaPaywayGateway\PhpPayway\enumeration\ABAPaymentOption;
-use AbaPaywayGateway\PhpPayway\enumeration\ABATransactionType;
+use PhpPayway\Enumeration\PaywayTransactionCurrency;
+use PhpPayway\Enumeration\PaywayPaymentOption;
+use PhpPayway\Enumeration\PaywayTransactionType;
 
 class PaywayCreateTransaction
 {
@@ -16,18 +16,18 @@ class PaywayCreateTransaction
         /**
          * @var PaywayTransactionItem[] $items
          */
-        public array                  $items,
-        public string                 $firstname,
-        public string                 $lastname,
-        public string                 $phone,
-        public string                 $email,
-        public ABAPaymentOption       $option,
-        public ABATransactionType     $type,
-        public ABATransactionCurrency $currency,
-        public ?string                $return_url = null,
-        public ?string                $continue_success_url = null,
-        public ?string                $return_params = null,
-        public ?float                 $shipping = null,
+        public array                     $items,
+        public string                    $firstname,
+        public string                    $lastname,
+        public string                    $phone,
+        public string                    $email,
+        public PaywayPaymentOption       $option,
+        public PaywayTransactionType     $type,
+        public PaywayTransactionCurrency $currency,
+        public ?string                   $return_url = null,
+        public ?string                   $continue_success_url = null,
+        public ?string                   $return_params = null,
+        public ?float                    $shipping = null,
     )
     {
 
@@ -40,18 +40,18 @@ class PaywayCreateTransaction
         /**
          * @var PaywayTransactionItem[] $items
          */
-        ?array                  $items,
-        ?string                 $firstname,
-        ?string                 $lastname,
-        ?string                 $phone,
-        ?string                 $email,
-        ?ABAPaymentOption       $option,
-        ?ABATransactionType     $type,
-        ?ABATransactionCurrency $currency,
-        ?string                 $return_url = null,
-        ?string                 $continue_success_url = null,
-        ?string                 $return_params = null,
-        ?float                  $shipping = null,
+        ?array                     $items,
+        ?string                    $firstname,
+        ?string                    $lastname,
+        ?string                    $phone,
+        ?string                    $email,
+        ?PaywayPaymentOption       $option,
+        ?PaywayTransactionType     $type,
+        ?PaywayTransactionCurrency $currency,
+        ?string                    $return_url = null,
+        ?string                    $continue_success_url = null,
+        ?string                    $return_params = null,
+        ?float                     $shipping = null,
     )
     {
         $copy = clone($this);
