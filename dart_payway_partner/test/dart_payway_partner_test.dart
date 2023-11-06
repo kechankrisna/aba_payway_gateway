@@ -66,26 +66,24 @@ void main() {
       print(r);
     });
 
-    test("test generated encode", () {
-      var data = {
+    test("test encypted and decryped", () {
+      Map<String, dynamic> data = {
         'pushback_url': 'https://www.mylekha.org/',
         'redirect_url': 'https://www.mylekha.org',
         'type': 0,
         'register_ref': 'Merchant001',
       };
-      /// var requestData = PaywayPartnerRegisterMerchant.fromMap(data);
-      /// var reqService =
-      ///     PaywayPartnerClientFormRequestService(partner: service.partner);
       var encypted = PaywayPartnerClientFormRequestService.opensslEncrypt(
           data, service.partner.partnerPublicKey);
       print(encypted);
       var decryped = PaywayPartnerClientFormRequestService.opensslDecrypt(
-          encypted, service.partner.partnerPrivateKey);
+          encypted, service.partner.partnerPrivateKey) as Map<String, dynamic>;
       print(decryped);
 
-      /// var output = reqService.generateRegisterMerchantFormData(requestData);
+      expect(data, decryped,
+          reason:
+              "by using encrypted data, so decrypted result should be equal data");
 
-      /// print(output);
     });
 
     test("test", () async {

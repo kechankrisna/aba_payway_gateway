@@ -53,12 +53,13 @@ class PaywayPartnerClientFormRequestService {
       publicKey: parser.parse(publickey) as RSAPublicKey,
       digest: RSADigest.SHA256,
     ));
-    var source = jsonEncode(data);
+    var codeUnits = json.encode(data).codeUnits;
+    List<int> source = utf8.encode(String.fromCharCodes(codeUnits));
     List<int> result = [];
 
     //Assumes 1024 bit key and encrypts in chunks.
     source.splitByLength(117).forEach((input) {
-      var output = encrypter.encrypt(input);
+      var output = encrypter.encryptBytes(input);
 
       result = [...result, ...output.bytes.toList()];
     });
@@ -73,20 +74,18 @@ class PaywayPartnerClientFormRequestService {
       privateKey: parser.parse(privatekey) as RSAPrivateKey,
       digest: RSADigest.SHA256,
     ));
-    List<int> source = base64.decode(data);
-
+    final stringChars = String.fromCharCodes(base64.decode(data));
+    List<int> source = stringChars.codeUnits;
     String result = "";
 
     //Assumes 1024 bit key and encrypts in chunks.
     source.splitByLength(128).forEach((input) {
       var encrypted = Encrypted(Uint8List.fromList(input));
-      var output = encrypter.decryptBytes(encrypted);
+      var output = encrypter.decrypt(encrypted);
 
-      result += utf8.decode(output);
-    
+      result += output;
     });
 
-    
-    return jsonDecode(result);
+    return json.decode(result);
   }
 }
