@@ -146,7 +146,7 @@ class PaywayTransactionService {
       /// pwt : "",
       /// type : "",
       /// paymentOption: "",
-      returnUrl: EncoderService.base64_encode( _transaction.returnUrl ?? "") ,
+      returnUrl: _transaction.returnUrl ?? "",
       /// cancelUrl : "",
       /// continueSuccessUrl : "",
       /// returnDeeplink : "",
@@ -195,7 +195,7 @@ class PaywayTransactionService {
             <input type="hidden" name="merchant_id" value="${merchant.merchantID}" id="merchant_id" />
             <input type="hidden" name="shipping" value="${_transaction.shipping}" id="shipping" />
             <input type="hidden" name="currency" value="${_transaction.currency.name}" id="currency" />
-            <input type="hidden" name="return_url" value="${EncoderService.base64_encode( _transaction.returnUrl ?? "")}" id="return_url" />
+            <input type="hidden" name="return_url" value="${_transaction.returnUrl ?? "" }" id="return_url" />
             <input style="display: none;" type="radio" name="payment_option" value="${_transaction.option.name}" id="payment_option" />
             <input type="hidden" name="payment_gate"  value="0" id="payment_gate" />
         </form>
