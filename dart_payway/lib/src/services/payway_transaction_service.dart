@@ -23,7 +23,7 @@ class PaywayTransactionService {
   /// Usage:
   ///
   /// ```dart
-  /// 
+  ///
   /// var _transaction = PaywayCreateTransaction(
   ///     amount: 6.00,
   ///     items: [
@@ -69,8 +69,8 @@ class PaywayTransactionService {
         client.interceptors.add(dioLoggerInterceptor);
       }
 
-      Response<String> response =
-          await client.post("/purchase", data: formData);
+      Response<String> response = await client
+          .post("/api/payment-gateway/v1/payments/purchase", data: formData);
 
       var _map = json.decode(response.data!) as Map<String, dynamic>;
       res = PaywayCreateTransactionResponse.fromMap(_map);
@@ -92,7 +92,7 @@ class PaywayTransactionService {
   /// Usage
   ///
   /// ```dart
-  /// 
+  ///
   /// var _transaction = PaywayCreateTransaction(
   ///     amount: 100.00,
   ///     items: [
@@ -109,7 +109,7 @@ class PaywayTransactionService {
   ///     option: PaywayPaymentOption.abapay,
   ///     shipping: 0.0,
   ///     returnUrl: "");
-  /// 
+  ///
   /// var webURI = await service.generateTransactionCheckoutURI(transaction: _transaction);
   ///
   /// ```
@@ -182,7 +182,7 @@ class PaywayTransactionService {
 <body>
 <div id="aba_main_modal" class="aba-modal">
     <div class="aba-modal-content">
-        <form method="POST" action="${merchant.baseApiUrl}/purchase" id="aba_merchant_request">
+        <form method="POST" action="${merchant.baseApiUrl}/api/payment-gateway/v1/payments/purchase" id="aba_merchant_request">
             <input type="hidden" name="hash" value="${hash}" id="hash"/>
             <input type="hidden" name="tran_id" value="${_transaction.tranId}" id="tran_id"/>
             <input type="hidden" name="amount" value="${_transaction.amount}" id="amount"/>
@@ -235,7 +235,7 @@ class PaywayTransactionService {
       }
 
       Response<String> response =
-          await client.post("/check-transaction", data: formData);
+          await client.post("/api/payment-gateway/v1/payments/check-transaction", data: formData);
 
       var _map = json.decode(response.data!) as Map<String, dynamic>;
       res = PaywayCheckTransactionResponse.fromMap(_map);
@@ -253,7 +253,7 @@ class PaywayTransactionService {
   /// otherwise false
   Future<bool> isTransactionCompleted(
       {required PaywayCheckTransaction transaction}) async {
-    var result = await this.checkTransaction(transaction: transaction);
+    var result = await checkTransaction(transaction: transaction);
     return (result.status == 0);
   }
 }
