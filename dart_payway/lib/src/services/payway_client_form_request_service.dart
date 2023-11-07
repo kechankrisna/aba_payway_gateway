@@ -12,8 +12,8 @@ class PaywayClientFormRequestService {
   /// allow to pre generate the correct data for form submit when send create request transaction
   ///
   generateCreateTransactionFormData(PaywayCreateTransaction transaction) {
-    var encodedReturnUrl = transaction
-        .returnUrl; // EncoderService.base64_encode(transaction.returnUrl);
+    // in doc: used base64_encode but in test base64 encode note work EncoderService.base64_encode(transaction.returnUrl);
+    var encodedReturnUrl = transaction.returnUrl;
 
     var encodedItem = EncoderService.base64_encode(
         transaction.items.map((e) => e.toMap()).toList());
@@ -33,6 +33,8 @@ class PaywayClientFormRequestService {
       paymentOption: transaction.option.name.toString(),
       currency: transaction.currency.name.toString(),
       returnUrl: encodedReturnUrl.toString(),
+      returnParams: transaction.returnParams ?? "",
+      customFields: transaction.customFields ?? "",
     );
     var hash = service.getHash(str);
 
@@ -50,6 +52,7 @@ class PaywayClientFormRequestService {
       "return_url": transaction.returnUrl ?? "",
       "continue_success_url": transaction.continueSuccessUrl ?? "",
       "return_params": transaction.returnParams ?? "",
+      "custom_fields": transaction.customFields ?? "",
       "shipping": transaction.shipping.toString(),
       "type": transaction.type.name,
       "payment_option": transaction.option.name,
@@ -78,6 +81,8 @@ class PaywayClientFormRequestService {
       paymentOption: "",
       currency: "",
       returnUrl: "",
+      returnParams: "",
+      customFields: "",
     );
     final hash = service.getHash(str);
 

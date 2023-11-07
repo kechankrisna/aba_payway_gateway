@@ -13,6 +13,7 @@ class PaywayCreateTransaction {
   final String? returnUrl;
   final String? continueSuccessUrl;
   final String? returnParams;
+  final String? customFields;
   final double? shipping;
   PaywayPaymentOption option;
   PaywayTransactionType type;
@@ -30,6 +31,7 @@ class PaywayCreateTransaction {
     this.returnUrl,
     this.continueSuccessUrl,
     this.returnParams,
+    this.customFields,
     this.shipping,
     this.option = PaywayPaymentOption.cards,
     this.type = PaywayTransactionType.purchase,
@@ -65,6 +67,7 @@ class PaywayCreateTransaction {
       'return_url': returnUrl ?? '',
       'continue_success_url': continueSuccessUrl ?? '',
       'return_params': returnParams ?? '',
+      'custom_fields': customFields ?? '',
       'shipping': shipping,
       'type': type.name,
       'payment_option': option.name,
@@ -86,6 +89,7 @@ class PaywayCreateTransaction {
       returnUrl: map['return_url'],
       continueSuccessUrl: map['continue_success_url'] ?? '',
       returnParams: map['return_params'],
+      customFields: map['custom_fields'],
       shipping: map['shipping']?.toDouble(),
       option: $PaywayPaymentOptionMap[map["payment_option"]] ??
           PaywayPaymentOption.cards,
@@ -108,6 +112,7 @@ class PaywayCreateTransaction {
     String? returnUrl,
     String? continueSuccessUrl,
     String? returnParams,
+    String? customFields,
     double? shipping,
     PaywayPaymentOption? option,
     PaywayTransactionType? type,
@@ -125,6 +130,7 @@ class PaywayCreateTransaction {
       returnUrl: returnUrl ?? this.returnUrl,
       continueSuccessUrl: continueSuccessUrl ?? this.continueSuccessUrl,
       returnParams: returnParams ?? this.returnParams,
+      customFields: customFields ?? this.customFields,
       shipping: shipping ?? this.shipping,
       option: option ?? this.option,
       type: type ?? this.type,
@@ -134,7 +140,7 @@ class PaywayCreateTransaction {
 
   @override
   String toString() {
-    return 'PaywayTransaction(tranId: $tranId, reqTime: $reqTime, amount: $amount, items: $items, firstname: $firstname, lastname: $lastname, phone: $phone, email: $email, returnUrl: $returnUrl, continueSuccessUrl: $continueSuccessUrl, returnParams: $returnParams, shipping: $shipping, option: $option, type: $type, currency: $currency)';
+    return 'PaywayTransaction(tranId: $tranId, reqTime: $reqTime, amount: $amount, items: $items, firstname: $firstname, lastname: $lastname, phone: $phone, email: $email, returnUrl: $returnUrl, continueSuccessUrl: $continueSuccessUrl, returnParams: $returnParams, customFields: $customFields, shipping: $shipping, option: $option, type: $type, currency: $currency)';
   }
 
   @override
@@ -153,6 +159,7 @@ class PaywayCreateTransaction {
         other.returnUrl == returnUrl &&
         other.continueSuccessUrl == continueSuccessUrl &&
         other.returnParams == returnParams &&
+        other.customFields == customFields &&
         other.shipping == shipping &&
         other.option == option &&
         other.type == type &&
@@ -172,6 +179,7 @@ class PaywayCreateTransaction {
         returnUrl.hashCode ^
         continueSuccessUrl.hashCode ^
         returnParams.hashCode ^
+        customFields.hashCode ^
         shipping.hashCode ^
         option.hashCode ^
         type.hashCode ^
