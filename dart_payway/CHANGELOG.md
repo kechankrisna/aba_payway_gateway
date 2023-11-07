@@ -1,3 +1,7 @@
+## 1.0.5
+
+- add return_url, return_params and custom_fields
+
 ## 1.0.4
 
 - fixed generate web ui link
