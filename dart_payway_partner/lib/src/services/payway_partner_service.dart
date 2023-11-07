@@ -71,7 +71,7 @@ class PaywayPartnerService {
 
   /// ## [checkMerchant]
   ///
-  /// register a new merchant
+  /// check a status merchant
   ///
   /// `merchant` : this information must be field in correctly
   ///
