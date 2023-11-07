@@ -1,3 +1,7 @@
+## 1.0.4
+
+- fixed generate web ui link
+
 ## 1.0.3
 
 - add document
