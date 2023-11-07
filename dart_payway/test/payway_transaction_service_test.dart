@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:dart_payway/dart_payway.dart';
 import 'package:test/test.dart';
 import 'package:dotenv/dotenv.dart';
@@ -25,24 +27,27 @@ void main() {
       final tranID = service.uniqueTranID();
 
       var _transaction = PaywayCreateTransaction(
-          amount: 6.00,
-          items: [
-            PaywayTransactionItem(name: "ទំនិញ 1", price: 1, quantity: 1),
-            PaywayTransactionItem(name: "ទំនិញ 2", price: 2, quantity: 1),
-            PaywayTransactionItem(name: "ទំនិញ 3", price: 3, quantity: 1),
-          ],
-          reqTime: service.uniqueReqTime(),
-          tranId: tranID,
-          email: 'support@mylekha.app',
-          firstname: 'Miss',
-          lastname: 'My Lekha',
-          phone: '010464144',
-          option: PaywayPaymentOption.abapay_deeplink,
-          shipping: 0.0,
-          returnUrl: "https://stage.mylekha.app");
+        amount: 10.00,
+        items: [
+          PaywayTransactionItem(name: "ទំនិញ 1", price: 2, quantity: 1),
+          PaywayTransactionItem(name: "ទំនិញ 2", price: 3, quantity: 1),
+          PaywayTransactionItem(name: "ទំនិញ 3", price: 5, quantity: 1),
+        ],
+        reqTime: service.uniqueReqTime(),
+        tranId: tranID,
+        email: 'support@mylekha.app',
+        firstname: 'Miss',
+        lastname: 'My Lekha',
+        phone: '010464144',
+        option: PaywayPaymentOption.abapay_deeplink,
+        shipping: 0.0,
+        returnUrl: "https://mylekha.org/api/v1.0/integrate/payway/success",
+        returnParams: EncoderService.base64_encode({ 'key_1': 'value_1', 'key_2': 'value_2' }),
+        customFields :EncoderService.base64_encode({"Purcahse order ref":"Po-MX9901", "Customfield2":"value for custom field"}),
+      );
 
       var createResponse =
-          await service.createTransaction(transaction: _transaction);
+          await service.createTransaction(transaction: _transaction, enabledLogger: true);
 
       expect(createResponse.abapayDeeplink != null, true,
           reason: "the deeplink should be a string according to docs");
@@ -62,25 +67,29 @@ void main() {
       final tranID = service.uniqueTranID();
 
       var _transaction = PaywayCreateTransaction(
-          amount: 100.00,
-          items: [
-            PaywayTransactionItem(name: "ទំនិញ 1", price: 50, quantity: 1),
-            PaywayTransactionItem(name: "ទំនិញ 2", price: 30, quantity: 1),
-            PaywayTransactionItem(name: "ទំនិញ 3", price: 20, quantity: 1),
-          ],
-          reqTime: service.uniqueReqTime(),
-          tranId: tranID,
-          email: 'support@mylekha.app',
-          firstname: 'Miss',
-          lastname: 'My Lekha',
-          phone: '010464144',
-          option: PaywayPaymentOption.abapay,
-          shipping: 0.0,
-          returnUrl: "");
-      
+        amount: 10,
+        items: [
+          PaywayTransactionItem(name: "ទំនិញ 1", price: 5, quantity: 1),
+          PaywayTransactionItem(name: "ទំនិញ 2", price: 3, quantity: 1),
+          PaywayTransactionItem(name: "ទំនិញ 3", price: 2, quantity: 1),
+        ],
+        reqTime: service.uniqueReqTime(),
+        tranId: tranID,
+        email: 'support@mylekha.app',
+        firstname: 'Miss',
+        lastname: 'My Lekha',
+        phone: '010464144',
+        option: PaywayPaymentOption.abapay,
+        shipping: 0.0,
+        returnUrl: "https://mylekha.org/api/v1.0/integrate/payway/success",
+        returnParams: EncoderService.base64_encode({ 'key_1': 'value_1', 'key_2': 'value_2' }),
+        customFields :EncoderService.base64_encode({"Purcahse order ref":"Po-MX9901", "Customfield2":"value for custom field"}),
+      );
+
       var webURI = await service.generateTransactionCheckoutURI(
           transaction: _transaction);
       io.File('checkout.html').writeAsString(webURI.data!.contentAsString());
+
       /// print(webURI);
 
       /// expect(

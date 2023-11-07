@@ -150,8 +150,8 @@ class PaywayTransactionService {
       /// cancelUrl : "",
       /// continueSuccessUrl : "",
       /// returnDeeplink : "",
-      /// customFields : "",
-      /// returnParams : "",
+      customFields : _transaction.customFields  ?? "",
+      returnParams : _transaction.returnParams ?? "",
     );
 
     /// _transaction.reqTime.toString() +
@@ -196,6 +196,8 @@ class PaywayTransactionService {
             <input type="hidden" name="shipping" value="${_transaction.shipping}" id="shipping" />
             <input type="hidden" name="currency" value="${_transaction.currency.name}" id="currency" />
             <input type="hidden" name="return_url" value="${_transaction.returnUrl ?? "" }" id="return_url" />
+            <input type="hidden" name="return_params" value="${_transaction.returnParams ?? "" }" id="return_params" />
+            <input type="hidden" name="custom_fields" value="${_transaction.customFields ?? "" }" id="custom_fields" />
             <input style="display: none;" type="radio" name="payment_option" value="${_transaction.option.name}" id="payment_option" />
             <input type="hidden" name="payment_gate"  value="0" id="payment_gate" />
         </form>
