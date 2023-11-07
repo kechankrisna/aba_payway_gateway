@@ -52,7 +52,7 @@ class PaywayPartnerService {
       }
 
       Response<String> response =
-          await client.post("/new-merchant", data: formData);
+          await client.post("/api/merchant-portal/online-self-activation/new-merchant", data: formData);
 
       var _map = json.decode(response.data!) as Map<String, dynamic>;
       res = PaywayPartnerRegisterMerchantResponse.fromMap(_map);
@@ -106,7 +106,7 @@ class PaywayPartnerService {
       }
 
       Response<String> response =
-          await client.post("/get-mc-credential-info", data: formData);
+          await client.post("/api/merchant-portal/online-self-activation/get-mc-credential-info", data: formData);
 
       var _map = json.decode(response.data!) as Map<String, dynamic>;
       res = PaywayPartnerCheckMerchantResponse.fromMap(_map);
