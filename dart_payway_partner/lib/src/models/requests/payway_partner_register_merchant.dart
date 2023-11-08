@@ -6,6 +6,24 @@ class PaywayPartnerRegisterMerchant {
   final String redirect_url;
   final int type;
   final String register_ref;
+
+  ///
+  /// `pushback_url`:  the url that we will push back in the background to partner after
+  /// register completed. 
+  /// ### Example: https://demo-payway-pred.ababank.com
+  ///
+  /// `redirect_url`: redirect to specific page after register completed:
+  /// 1). If field “type” below equal 1, the format must be {"ios_scheme":"link_to_your_page"
+  /// ,"android_scheme":"link_to_your_page"}
+  /// 2). If field “type” below equal 0, the format must be https://xxxxxxxxxxxxxxxxxxxxxx
+  ///
+  /// `type`: the value that identifies you request from native app or desktop. Native app
+  /// equal 1, desktop equal 0, if keep blank it will 0.
+  ///
+  /// `register_ref`:  partner generated register reference or tracking string. It is recommended that you send a unique value
+  /// for each merchant registration with character and can include underscore or minus. 
+  /// ### Example:
+  /// merchant, merchant_xxxx, merchant-xxxx, xxxxxxx, xxxxx_aaa
   PaywayPartnerRegisterMerchant({
     required this.pushback_url,
     required this.redirect_url,

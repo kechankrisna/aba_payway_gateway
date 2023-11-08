@@ -17,6 +17,17 @@ class PaywayPartnerClientFormRequestService {
   ///
   /// allow to pre generate the correct data for form submit when send create request register merchant
   ///
+  /// ### Example
+  ///
+  /// `request_time`: 20200211050440
+  ///
+  /// `request_data`: Uyv+FcEc+QHD3UO/WYhBFH6l02Z0DVTNgrGma8DWXoAGkSxmQUphBFnavaEBDESbg/r+xrE+6aAWtZ+X+MHNMiO3Q8p+y+DDByA+A5V9/UkSs1r4wZ5yRw5wvt9Aqfrr3mqhDJN6EYqtWyxXT3Uk6eJ+Wxi7BHvGOzxbjy1NZ9uSh0hOxJfZ+vljHjr/OldFwYq01Fsq4uuhekZBDYctt7lICf1+rg+g0Mr6YOwBBcTXTdhszMLHlufa3+rM/j4mv3DTR7EODEQLm1zOrPfHM2Yc2Pzlh1kHFMy65gAXYYPTGVxA8v5Y7Zey
+  /// fawPgsehWWFsrnIZ87vNg5vSiDrhwUJ62Ep5drEPrXn5rECuyaNBI5iYUDzQrftJP0sXAWbgV6zcdklUzUGA90eg+Fbdd3U6azUhTGGjLTHk5XO4UX8h48JYUzjDg0tPvAH8boHQr/CpKU+XTtvv3ezlcod2s2Iou4ZpmfjTGtkPCTm2KpwkD0hIkEyrD3h6XQY449T/,
+  /// 
+  /// `partner_id`: /GHeWRMQa2l9H1+TkclWuw==
+  /// 
+  /// `hash`: 43bde1fdf5b631897172a956c029aa24b57679f75b5ed9a56a10b1b6d799dbb1
+  /// 
   Map<String, dynamic> generateRegisterMerchantFormData(
       PaywayPartnerRegisterMerchant requestData,
       {String? requestTime}) {
@@ -49,7 +60,17 @@ class PaywayPartnerClientFormRequestService {
   /// [generateCheckMerchantFormData]
   ///
   /// allow to pre generate the correct data for form submit when send create request check merchant info
+  /// 
+  /// ### Example
   ///
+  /// `request_time`: 20200211050440
+  ///
+  /// `request_data`: a/lHnhQ9Sa4zf9feh9TeVUExcEPiztzyjZd0aoWay+98lPXgNRbDBt42qi4wy2wGIPKWTif4Ha6kkrrmhDq5tVtdADCjP0DOJFassV4cehXuZHfWuFXXUymmCFk0n+C26YliIDLEv0y03t7bRHusBi6YbW/O05pyIk5LOVi0ybA=
+  ///
+  /// `partner_id`: /GHeWRMQa2l9H1+TkclWuw==
+  /// 
+  /// `hash`: 43bde1fdf5b631897172a956c029aa24b57679f75b5ed9a56a10b1b6d799dbb1
+  /// 
   Map<String, dynamic> generateCheckMerchantFormData(
       PaywayPartnerCheckMerchant requestData,
       {String? requestTime}) {

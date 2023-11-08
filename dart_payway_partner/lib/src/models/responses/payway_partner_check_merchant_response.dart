@@ -4,11 +4,31 @@ import 'dart:convert';
 class PaywayPartnerCheckMerchantResponse {
   final String data;
   final PaywayPartnerCheckMerchantResponseStatus status;
+
+  ///
+  /// `data`: will be need to decode from base64 string to get
+  /// We will response below fields as
+  /// encryption text:
+  /// - partner_name
+  /// - merchant_name
+  /// - mid
+  /// - merchant_key
+  /// - public_key
+  /// - register_ref
+  /// - currency
+  /// - rsa_public_key
+  ///
+  /// `status`: will be json format like
+  /// 
+  /// Code:00, msg: success
+  /// 
+  /// Code:PTL02, msg: wrong hash
+  /// 
+  /// Code:PTL06, msg: The Request is Expired
   PaywayPartnerCheckMerchantResponse({
     required this.data,
     required this.status,
   });
- 
 
   PaywayPartnerCheckMerchantResponse copyWith({
     String? data,
@@ -30,30 +50,31 @@ class PaywayPartnerCheckMerchantResponse {
   factory PaywayPartnerCheckMerchantResponse.fromMap(Map<String, dynamic> map) {
     return PaywayPartnerCheckMerchantResponse(
       data: map['data'] as String,
-      status: PaywayPartnerCheckMerchantResponseStatus.fromMap(map['status'] as Map<String,dynamic>),
+      status: PaywayPartnerCheckMerchantResponseStatus.fromMap(
+          map['status'] as Map<String, dynamic>),
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory PaywayPartnerCheckMerchantResponse.fromJson(String source) => PaywayPartnerCheckMerchantResponse.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory PaywayPartnerCheckMerchantResponse.fromJson(String source) =>
+      PaywayPartnerCheckMerchantResponse.fromMap(
+          json.decode(source) as Map<String, dynamic>);
 
   @override
-  String toString() => 'PaywayPartnerCheckMerchantResponse(data: $data, status: $status)';
+  String toString() =>
+      'PaywayPartnerCheckMerchantResponse(data: $data, status: $status)';
 
   @override
   bool operator ==(covariant PaywayPartnerCheckMerchantResponse other) {
     if (identical(this, other)) return true;
-  
-    return 
-      other.data == data &&
-      other.status == status;
+
+    return other.data == data && other.status == status;
   }
 
   @override
   int get hashCode => data.hashCode ^ status.hashCode;
 }
-
 
 class PaywayPartnerCheckMerchantResponseStatus {
   final String code;
@@ -105,8 +126,7 @@ class PaywayPartnerCheckMerchantResponseStatus {
       'PaywayPartnerCheckMerchantResponseStatus(code: $code, message: $message, tran_id: $tran_id)';
 
   @override
-  bool operator ==(
-      covariant PaywayPartnerCheckMerchantResponseStatus other) {
+  bool operator ==(covariant PaywayPartnerCheckMerchantResponseStatus other) {
     if (identical(this, other)) return true;
 
     return other.code == code &&
