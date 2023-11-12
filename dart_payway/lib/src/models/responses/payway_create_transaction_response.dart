@@ -1,5 +1,7 @@
+import 'package:dart_payway/dart_payway.dart';
+
 class PaywayCreateTransactionResponse {
-  final int status;
+  final PaywayTransactionStatus? status;
   final String description;
   final String? qrString;
   final String? qrImage;
@@ -8,7 +10,7 @@ class PaywayCreateTransactionResponse {
   final String? playStore;
 
   PaywayCreateTransactionResponse({
-    this.status = -1,
+    this.status,
     this.description = 'Unknown Error',
     this.qrString,
     this.qrImage,
@@ -18,15 +20,15 @@ class PaywayCreateTransactionResponse {
   });
 
   factory PaywayCreateTransactionResponse.fromMap(Map<String, dynamic> map) {
-    int _statusCode = -1;
-    if (map["status"] is int) {
-      _statusCode = map["status"];
-    }
-    if (map["status"] is Map) {
-      _statusCode = int.tryParse("${map["status"]["code"]}")!;
-    }
+    /// int _statusCode = -1;
+    /// if (map["status"] is int) {
+    ///   _statusCode = map["status"];
+    /// }
+    /// if (map["status"] is Map) {
+    ///   _statusCode = int.tryParse("${map["status"]["code"]}")!;
+    /// }
     return PaywayCreateTransactionResponse(
-      status: _statusCode,
+      status: PaywayTransactionStatus.fromMap(map['status']),
       description: map["description"],
       qrString: map["qrString"],
       qrImage: map["qrImage"],
@@ -36,7 +38,7 @@ class PaywayCreateTransactionResponse {
     );
   }
   Map<String, dynamic> toMap() => {
-        "status": status,
+        "status": status?.toMap(),
         "description": description,
         "qrString": qrString,
         "qrImage": qrImage,
@@ -45,11 +47,8 @@ class PaywayCreateTransactionResponse {
         "play_store": playStore,
       };
 
-  String get message =>
-      PaywayCreateTransactionResponseMessage.of(status).message;
-
   PaywayCreateTransactionResponse copyWith({
-    int? status,
+    PaywayTransactionStatus? status,
     String? description,
     String? qrString,
     String? qrImage,
@@ -70,7 +69,7 @@ class PaywayCreateTransactionResponse {
 
   @override
   String toString() {
-    return 'PaywayCreateTransactionResponse(status: $status, description: $description, qrString: $qrString, qrImage: $qrImage, abapayDeeplink: $abapayDeeplink, appStore: $appStore, playStore: $playStore)';
+    return 'PaywayCreateTransactionResponse(status: ${status.toString()}, description: $description, qrString: $qrString, qrImage: $qrImage, abapayDeeplink: $abapayDeeplink, appStore: $appStore, playStore: $playStore)';
   }
 
   @override

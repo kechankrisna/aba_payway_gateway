@@ -56,7 +56,7 @@ void main() {
           transaction: PaywayCheckTransaction(
         tranId: _transaction.tranId,
         reqTime: service.uniqueReqTime(),
-      ));
+      ), enabledLogger: true);
 
       expect(checkResponse.status == 2, true,
           reason: "the new transaction created should be pending or status 2");

@@ -47,7 +47,7 @@ class PaywayTransactionService {
   Future<PaywayCreateTransactionResponse> createTransaction(
       {required PaywayCreateTransaction transaction,
       bool enabledLogger = false}) async {
-    var res = PaywayCreateTransactionResponse(status: 11);
+    var res = PaywayCreateTransactionResponse(status: PaywayTransactionStatus.empty());
     var _transaction = transaction;
     if (![PaywayPaymentOption.abapay_deeplink].contains(transaction.option)) {
       _transaction =

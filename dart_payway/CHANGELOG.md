@@ -1,3 +1,7 @@
+## 1.0.6
+
+- change status int to map for create transaction response
+
 ## 1.0.5
 
 - add return_url, return_params and custom_fields
