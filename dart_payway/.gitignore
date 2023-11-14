@@ -3,3 +3,9 @@
 .dart_tool/
 *.env
 *.html
+example/windows
+example/android
+example/ios
+example/macos
+example/web
+example/linux
