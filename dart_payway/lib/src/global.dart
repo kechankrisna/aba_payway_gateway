@@ -1,7 +1,5 @@
 debugPrint(Object object) => print(object);
 
-bool kIsWeb = bool.fromEnvironment('dart.library.js_util');
-
 bool listEquals<T>(List<T>? a, List<T>? b) {
   if (a == null) {
     return b == null;
