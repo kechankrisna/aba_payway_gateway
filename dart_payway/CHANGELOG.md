@@ -1,3 +1,7 @@
+## 1.0.7
+
+- fixed kIsWeb
+
 ## 1.0.6
 
 - change status int to map for create transaction response
