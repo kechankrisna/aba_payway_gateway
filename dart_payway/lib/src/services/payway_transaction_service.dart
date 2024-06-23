@@ -47,13 +47,20 @@ class PaywayTransactionService {
   Future<PaywayCreateTransactionResponse> createTransaction(
       {required PaywayCreateTransaction transaction,
       bool enabledLogger = false}) async {
-    var res = PaywayCreateTransactionResponse(status: PaywayTransactionStatus.empty());
+    var res = PaywayCreateTransactionResponse(
+        status: PaywayTransactionStatus.empty());
     var _transaction = transaction;
-    if (![PaywayPaymentOption.abapay_deeplink].contains(transaction.option)) {
+    if (![
+      PaywayPaymentOption.abapay_deeplink,
+      PaywayPaymentOption.abapay_khqr_deeplink
+    ].contains(transaction.option)) {
       _transaction =
           _transaction.copyWith(option: PaywayPaymentOption.abapay_deeplink);
     }
-    assert([PaywayPaymentOption.abapay_deeplink].contains(_transaction.option));
+    assert([
+      PaywayPaymentOption.abapay_deeplink,
+      PaywayPaymentOption.abapay_khqr_deeplink
+    ].contains(_transaction.option));
 
     final clientService = PaywayClientFormRequestService(merchant: merchant);
     Map<String, dynamic> map =
@@ -147,11 +154,12 @@ class PaywayTransactionService {
       /// type : "",
       /// paymentOption: "",
       returnUrl: _transaction.returnUrl ?? "",
+
       /// cancelUrl : "",
       /// continueSuccessUrl : "",
       /// returnDeeplink : "",
-      customFields : _transaction.customFields  ?? "",
-      returnParams : _transaction.returnParams ?? "",
+      customFields: _transaction.customFields ?? "",
+      returnParams: _transaction.returnParams ?? "",
     );
 
     /// _transaction.reqTime.toString() +
@@ -195,9 +203,9 @@ class PaywayTransactionService {
             <input type="hidden" name="merchant_id" value="${merchant.merchantID}" id="merchant_id" />
             <input type="hidden" name="shipping" value="${_transaction.shipping}" id="shipping" />
             <input type="hidden" name="currency" value="${_transaction.currency.name}" id="currency" />
-            <input type="hidden" name="return_url" value="${_transaction.returnUrl ?? "" }" id="return_url" />
-            <input type="hidden" name="return_params" value="${_transaction.returnParams ?? "" }" id="return_params" />
-            <input type="hidden" name="custom_fields" value="${_transaction.customFields ?? "" }" id="custom_fields" />
+            <input type="hidden" name="return_url" value="${_transaction.returnUrl ?? ""}" id="return_url" />
+            <input type="hidden" name="return_params" value="${_transaction.returnParams ?? ""}" id="return_params" />
+            <input type="hidden" name="custom_fields" value="${_transaction.customFields ?? ""}" id="custom_fields" />
             <input style="display: none;" type="radio" name="payment_option" value="${_transaction.option.name}" id="payment_option" />
             <input type="hidden" name="payment_gate"  value="0" id="payment_gate" />
         </form>

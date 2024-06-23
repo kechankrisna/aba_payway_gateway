@@ -8,6 +8,7 @@ class PaywayCreateTransactionResponse {
   final String? abapayDeeplink;
   final String? appStore;
   final String? playStore;
+  final String? checkoutQrUrl;
 
   PaywayCreateTransactionResponse({
     this.status,
@@ -17,6 +18,7 @@ class PaywayCreateTransactionResponse {
     this.abapayDeeplink,
     this.appStore,
     this.playStore,
+    this.checkoutQrUrl,
   });
 
   factory PaywayCreateTransactionResponse.fromMap(Map<String, dynamic> map) {
@@ -35,6 +37,7 @@ class PaywayCreateTransactionResponse {
       abapayDeeplink: map["abapay_deeplink"],
       appStore: map["app_store"],
       playStore: map["play_store"],
+      checkoutQrUrl: map["checkout_qr_url"],
     );
   }
   Map<String, dynamic> toMap() => {
@@ -45,6 +48,7 @@ class PaywayCreateTransactionResponse {
         "abapay_deeplink": abapayDeeplink,
         "app_store": appStore,
         "play_store": playStore,
+        "checkout_qr_url": checkoutQrUrl,
       };
 
   PaywayCreateTransactionResponse copyWith({
@@ -55,6 +59,7 @@ class PaywayCreateTransactionResponse {
     String? abapayDeeplink,
     String? appStore,
     String? playStore,
+    String? checkoutQrUrl,
   }) {
     return PaywayCreateTransactionResponse(
       status: status ?? this.status,
@@ -64,12 +69,13 @@ class PaywayCreateTransactionResponse {
       abapayDeeplink: abapayDeeplink ?? this.abapayDeeplink,
       appStore: appStore ?? this.appStore,
       playStore: playStore ?? this.playStore,
+      checkoutQrUrl: checkoutQrUrl ?? this.checkoutQrUrl,
     );
   }
 
   @override
   String toString() {
-    return 'PaywayCreateTransactionResponse(status: ${status.toString()}, description: $description, qrString: $qrString, qrImage: $qrImage, abapayDeeplink: $abapayDeeplink, appStore: $appStore, playStore: $playStore)';
+    return 'PaywayCreateTransactionResponse(status: ${status.toString()}, description: $description, qrString: $qrString, qrImage: $qrImage, abapayDeeplink: $abapayDeeplink, appStore: $appStore, playStore: $playStore, checkoutQrUrl: $checkoutQrUrl)';
   }
 
   @override
@@ -83,7 +89,8 @@ class PaywayCreateTransactionResponse {
         other.qrImage == qrImage &&
         other.abapayDeeplink == abapayDeeplink &&
         other.appStore == appStore &&
-        other.playStore == playStore;
+        other.playStore == playStore &&
+        other.checkoutQrUrl == checkoutQrUrl;
   }
 
   @override
@@ -94,7 +101,8 @@ class PaywayCreateTransactionResponse {
         qrImage.hashCode ^
         abapayDeeplink.hashCode ^
         appStore.hashCode ^
-        playStore.hashCode;
+        playStore.hashCode ^
+        checkoutQrUrl.hashCode;
   }
 }
 
