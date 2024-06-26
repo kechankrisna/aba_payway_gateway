@@ -1,3 +1,7 @@
+## 1.0.8+1
+
+- fixed missing continueSuccessUrl when has
+
 ## 1.0.8
 
 - add support for payment option as checkout_qr_url
