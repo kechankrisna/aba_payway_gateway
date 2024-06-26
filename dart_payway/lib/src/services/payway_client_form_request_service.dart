@@ -32,6 +32,7 @@ class PaywayClientFormRequestService {
       type: transaction.type.name.toString(),
       paymentOption: transaction.option.name.toString(),
       currency: transaction.currency.name.toString(),
+      continueSuccessUrl: transaction.continueSuccessUrl.toString(),
       returnUrl: encodedReturnUrl.toString(),
       returnParams: transaction.returnParams ?? "",
       customFields: transaction.customFields ?? "",
