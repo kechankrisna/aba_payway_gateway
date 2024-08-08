@@ -13,6 +13,7 @@ class PaywayCreateTransaction {
   final String? returnUrl;
   final String? continueSuccessUrl;
   final String? returnParams;
+  final String? returnDeeplink;
   final String? customFields;
   final double? shipping;
   PaywayPaymentOption option;
@@ -31,6 +32,7 @@ class PaywayCreateTransaction {
     this.returnUrl,
     this.continueSuccessUrl,
     this.returnParams,
+    this.returnDeeplink,
     this.customFields,
     this.shipping,
     this.option = PaywayPaymentOption.cards,
@@ -51,6 +53,7 @@ class PaywayCreateTransaction {
       lastname: "",
       phone: "",
       email: "",
+      returnDeeplink: "",
     );
   }
 
@@ -67,6 +70,7 @@ class PaywayCreateTransaction {
       'return_url': returnUrl ?? '',
       'continue_success_url': continueSuccessUrl ?? '',
       'return_params': returnParams ?? '',
+      'return_deeplink': returnDeeplink ?? '',
       'custom_fields': customFields ?? '',
       'shipping': shipping,
       'type': type.name,
@@ -89,6 +93,7 @@ class PaywayCreateTransaction {
       returnUrl: map['return_url'],
       continueSuccessUrl: map['continue_success_url'] ?? '',
       returnParams: map['return_params'],
+      returnDeeplink: map['return_deeplink'],
       customFields: map['custom_fields'],
       shipping: map['shipping']?.toDouble(),
       option: $PaywayPaymentOptionMap[map["payment_option"]] ??
@@ -112,6 +117,7 @@ class PaywayCreateTransaction {
     String? returnUrl,
     String? continueSuccessUrl,
     String? returnParams,
+    String? returnDeeplink,
     String? customFields,
     double? shipping,
     PaywayPaymentOption? option,
@@ -130,6 +136,7 @@ class PaywayCreateTransaction {
       returnUrl: returnUrl ?? this.returnUrl,
       continueSuccessUrl: continueSuccessUrl ?? this.continueSuccessUrl,
       returnParams: returnParams ?? this.returnParams,
+      returnDeeplink: returnDeeplink ?? this.returnDeeplink,
       customFields: customFields ?? this.customFields,
       shipping: shipping ?? this.shipping,
       option: option ?? this.option,
@@ -140,7 +147,7 @@ class PaywayCreateTransaction {
 
   @override
   String toString() {
-    return 'PaywayTransaction(tranId: $tranId, reqTime: $reqTime, amount: $amount, items: $items, firstname: $firstname, lastname: $lastname, phone: $phone, email: $email, returnUrl: $returnUrl, continueSuccessUrl: $continueSuccessUrl, returnParams: $returnParams, customFields: $customFields, shipping: $shipping, option: $option, type: $type, currency: $currency)';
+    return 'PaywayTransaction(tranId: $tranId, reqTime: $reqTime, amount: $amount, items: $items, firstname: $firstname, lastname: $lastname, phone: $phone, email: $email, returnUrl: $returnUrl, continueSuccessUrl: $continueSuccessUrl, returnParams: $returnParams, returnDeeplink: $returnDeeplink, customFields: $customFields, shipping: $shipping, option: $option, type: $type, currency: $currency)';
   }
 
   @override
@@ -159,6 +166,7 @@ class PaywayCreateTransaction {
         other.returnUrl == returnUrl &&
         other.continueSuccessUrl == continueSuccessUrl &&
         other.returnParams == returnParams &&
+        other.returnDeeplink == returnDeeplink &&
         other.customFields == customFields &&
         other.shipping == shipping &&
         other.option == option &&
@@ -179,6 +187,7 @@ class PaywayCreateTransaction {
         returnUrl.hashCode ^
         continueSuccessUrl.hashCode ^
         returnParams.hashCode ^
+        returnDeeplink.hashCode ^
         customFields.hashCode ^
         shipping.hashCode ^
         option.hashCode ^

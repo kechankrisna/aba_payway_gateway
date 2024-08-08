@@ -35,6 +35,7 @@ class PaywayClientFormRequestService {
       continueSuccessUrl: transaction.continueSuccessUrl.toString(),
       returnUrl: encodedReturnUrl.toString(),
       returnParams: transaction.returnParams ?? "",
+      returnDeeplink: transaction.returnDeeplink ?? "",
       customFields: transaction.customFields ?? "",
     );
     var hash = service.getHash(str);
@@ -53,6 +54,7 @@ class PaywayClientFormRequestService {
       "return_url": transaction.returnUrl ?? "",
       "continue_success_url": transaction.continueSuccessUrl ?? "",
       "return_params": transaction.returnParams ?? "",
+      "return_deeplink": transaction.returnDeeplink ?? "",
       "custom_fields": transaction.customFields ?? "",
       "shipping": transaction.shipping.toString(),
       "type": transaction.type.name,
@@ -83,6 +85,7 @@ class PaywayClientFormRequestService {
       currency: "",
       returnUrl: "",
       returnParams: "",
+      returnDeeplink: "",
       customFields: "",
     );
     final hash = service.getHash(str);

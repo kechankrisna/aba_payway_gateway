@@ -1,3 +1,7 @@
+## 1.0.8+2
+
+- fixed missing returnDeeplink when has
+
 ## 1.0.8+1
 
 - fixed missing continueSuccessUrl when has

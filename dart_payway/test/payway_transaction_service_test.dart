@@ -19,7 +19,7 @@ void main() {
         merchantApiName: env['ABA_PAYWAY_MERCHANT_NAME'] ?? '',
         merchantApiKey: env['ABA_PAYWAY_API_KEY'] ?? '',
         baseApiUrl: env['ABA_PAYWAY_API_URL'] ?? '',
-        refererDomain: "http://mylekha.app",
+        refererDomain: "http://localhost",
       ));
     });
 
@@ -37,11 +37,13 @@ void main() {
         tranId: tranID,
         email: 'support@mylekha.app',
         firstname: 'Miss',
-        lastname: 'My Lekha',
+        lastname: 'MyLekha',
         phone: '010464144',
-        option: PaywayPaymentOption.abapay_deeplink,
+        option: PaywayPaymentOption.abapay_khqr_deeplink,
         shipping: 0.0,
         returnUrl: "https://mylekha.org/api/v1.0/integrate/payway/success",
+        continueSuccessUrl: "https://mylekha.org/api/v1.0/integrate/payway/success",
+        returnDeeplink: EncoderService.base64_encode({ 'ios_scheme': 'https://client.mylekha.app', 'tran_id': '$tranID' }),
         returnParams: EncoderService.base64_encode({ 'key_1': 'value_1', 'key_2': 'value_2' }),
         customFields :EncoderService.base64_encode({"Purcahse order ref":"Po-MX9901", "Customfield2":"value for custom field"}),
       );
@@ -82,6 +84,8 @@ void main() {
         option: PaywayPaymentOption.abapay,
         shipping: 0.0,
         returnUrl: "https://mylekha.org/api/v1.0/integrate/payway/success",
+        continueSuccessUrl: "https://mylekha.org/api/v1.0/integrate/payway/success",
+        returnDeeplink: EncoderService.base64_encode({ 'ios_scheme': 'https://client.mylekha.app', 'tran_id': '$tranID' }),
         returnParams: EncoderService.base64_encode({ 'key_1': 'value_1', 'key_2': 'value_2' }),
         customFields :EncoderService.base64_encode({"Purcahse order ref":"Po-MX9901", "Customfield2":"value for custom field"}),
       );

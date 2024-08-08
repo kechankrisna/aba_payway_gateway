@@ -57,7 +57,7 @@ class _MyHomePageState extends State<MyHomePage> {
       merchantApiName: dotenv.env['ABA_PAYWAY_MERCHANT_NAME'] ?? '',
       merchantApiKey: dotenv.env['ABA_PAYWAY_API_KEY'] ?? '',
       baseApiUrl: dotenv.env['ABA_PAYWAY_API_URL'] ?? '',
-      refererDomain: "http://mylekha.app",
+      refererDomain: "http://localhost",
     ));
     super.initState();
     kIsWeb;
@@ -80,15 +80,15 @@ class _MyHomePageState extends State<MyHomePage> {
       firstname: 'Miss',
       lastname: 'My Lekha',
       phone: '010464144',
-      option: PaywayPaymentOption.abapay_deeplink,
+      option: PaywayPaymentOption.abapay_khqr_deeplink,
       shipping: 0.0,
-      returnUrl: "https://mylekha.org/api/v1.0/integrate/payway/success",
+      returnUrl:
+          "https://xdgacmihblkqdexzbmkw.supabase.co/functions/v1/payway_checkout_success",
+      continueSuccessUrl: "https://mylekha.app",
       returnParams: EncoderService.base64_encode(
-          {'key_1': 'value_1', 'key_2': 'value_2'}),
-      customFields: EncoderService.base64_encode({
-        "Purcahse order ref": "Po-MX9901",
-        "Customfield2": "value for custom field"
-      }),
+          {"booking_id": "0032153b-8df2-40a3-b533-37622e7ecd37"}),
+      customFields: EncoderService.base64_encode(
+          {"booking_id": "0032153b-8df2-40a3-b533-37622e7ecd37"}),
     );
 
     try {
