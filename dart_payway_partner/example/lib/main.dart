@@ -45,6 +45,7 @@ class _MyHomePageState extends State<MyHomePage> {
       partnerName: dotenv.env['ABA_PARTNER_NAME'] ?? '',
       partnerID: dotenv.env['ABA_PARTNER_ID'] ?? '',
       partnerKey: dotenv.env['ABA_PARTNER_KEY'] ?? '',
+      partnerReferer: dotenv.env['ABA_PARTNER_REFERER_DOMAIN'] ?? '',
       partnerPrivateKey: utf8
           .decode(base64.decode(dotenv.env['ABA_PARTNER_PRIVATE_KEY'] ?? "")),
       partnerPublicKey: utf8

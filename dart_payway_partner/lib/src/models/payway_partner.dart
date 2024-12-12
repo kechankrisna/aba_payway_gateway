@@ -5,6 +5,7 @@ class PaywayPartner {
   final String partnerName;
   final String partnerID;
   final String partnerKey;
+  final String partnerReferer;
   final String partnerPrivateKey;
   final String partnerPublicKey;
   final String baseApiUrl;
@@ -26,6 +27,7 @@ class PaywayPartner {
     required this.partnerName,
     required this.partnerID,
     required this.partnerKey,
+    required this.partnerReferer,
     required this.partnerPrivateKey,
     required this.partnerPublicKey,
     required this.baseApiUrl,
@@ -35,6 +37,7 @@ class PaywayPartner {
     String? partnerName,
     String? partnerID,
     String? partnerKey,
+    String? partnerReferer,
     String? partnerPrivateKey,
     String? partnerPublicKey,
     String? baseApiUrl,
@@ -43,6 +46,7 @@ class PaywayPartner {
       partnerName: partnerName ?? this.partnerName,
       partnerID: partnerID ?? this.partnerID,
       partnerKey: partnerKey ?? this.partnerKey,
+      partnerReferer: partnerReferer ?? this.partnerReferer,
       partnerPrivateKey: partnerPrivateKey ?? this.partnerPrivateKey,
       partnerPublicKey: partnerPublicKey ?? this.partnerPublicKey,
       baseApiUrl: baseApiUrl ?? this.baseApiUrl,
@@ -54,6 +58,7 @@ class PaywayPartner {
       'partnerName': partnerName,
       'partnerID': partnerID,
       'partnerKey': partnerKey,
+      'partnerReferer': partnerReferer,
       'partnerPrivateKey': partnerPrivateKey,
       'partnerPublicKey': partnerPublicKey,
       'baseApiUrl': baseApiUrl,
@@ -65,6 +70,7 @@ class PaywayPartner {
       partnerName: map['partnerName'] as String,
       partnerID: map['partnerID'] as String,
       partnerKey: map['partnerKey'] as String,
+      partnerReferer: map['partnerReferer'] as String,
       partnerPrivateKey: map['partnerPrivateKey'] as String,
       partnerPublicKey: map['partnerPublicKey'] as String,
       baseApiUrl: map['baseApiUrl'] as String,
@@ -78,7 +84,7 @@ class PaywayPartner {
 
   @override
   String toString() {
-    return 'PaywayPartner(partnerName: $partnerName, partnerID: $partnerID, partnerKey: $partnerKey, partnerPrivateKey: $partnerPrivateKey, partnerPublicKey: $partnerPublicKey, baseApiUrl: $baseApiUrl)';
+    return 'PaywayPartner(partnerName: $partnerName, partnerID: $partnerID, partnerKey: $partnerKey, partnerReferer: $partnerReferer, partnerPrivateKey: $partnerPrivateKey, partnerPublicKey: $partnerPublicKey, baseApiUrl: $baseApiUrl)';
   }
 
   @override
@@ -88,6 +94,7 @@ class PaywayPartner {
     return other.partnerName == partnerName &&
         other.partnerID == partnerID &&
         other.partnerKey == partnerKey &&
+        other.partnerReferer == partnerReferer &&
         other.partnerPrivateKey == partnerPrivateKey &&
         other.partnerPublicKey == partnerPublicKey &&
         other.baseApiUrl == baseApiUrl;
@@ -98,6 +105,7 @@ class PaywayPartner {
     return partnerName.hashCode ^
         partnerID.hashCode ^
         partnerKey.hashCode ^
+        partnerReferer.hashCode ^
         partnerPrivateKey.hashCode ^
         partnerPublicKey.hashCode ^
         baseApiUrl.hashCode;

@@ -30,6 +30,9 @@ class PaywayPartnerClientService {
     dio.interceptors
         .add(InterceptorsWrapper(onRequest: (options, handler) async {
       options.headers["Accept"] = "application/json";
+      if(!kIsWeb) {
+        options.headers["Referer"] = partner?.partnerReferer;
+      }
       return handler.next(options);
     }, onResponse: (response, handler) {
       // Do something with response data

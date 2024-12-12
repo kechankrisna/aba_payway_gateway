@@ -1,6 +1,6 @@
 name: dart_payway_partner
 description: A self registration for aba payway
-version: 1.0.2
+version: 1.0.2+1
 repository: https://github.com/kechankrisna/aba_payway_gateway/tree/main/dart_payway_partner
 
 environment:

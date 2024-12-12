@@ -19,6 +19,7 @@ void main() {
         partnerName: env['ABA_PARTNER_NAME'] ?? '',
         partnerID: env['ABA_PARTNER_ID'] ?? '',
         partnerKey: env['ABA_PARTNER_KEY'] ?? '',
+        partnerReferer: env['ABA_PARTNER_REFERER_DOMAIN'] ?? '',
         partnerPrivateKey:
             utf8.decode(base64.decode(env['ABA_PARTNER_PRIVATE_KEY'] ?? "")),
         partnerPublicKey:

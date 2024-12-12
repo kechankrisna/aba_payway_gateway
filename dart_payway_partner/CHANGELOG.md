@@ -1,3 +1,7 @@
+## 1.0.2+1
+
+- add ABA_PARTNER_REFERER_DOMAIN as Referer
+
 ## 1.0.2
 
 - fixed kIsWeb
