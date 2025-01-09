@@ -1,3 +1,7 @@
+## 1.0.2+2
+
+- fix date_format from yMddhhmmss to yMMddhhmmss
+
 ## 1.0.2+1
 
 - add ABA_PARTNER_REFERER_DOMAIN as Referer
