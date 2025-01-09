@@ -35,7 +35,7 @@ class PaywayPartnerClientFormRequestService {
         opensslEncrypt(requestData.toMap(), partner.partnerPublicKey);
 
     final _requestTime =
-        requestTime ?? DateFormat("yMddhhmmss").format(DateTime.now());
+        requestTime ?? DateFormat("yMMddhhmmss").format(DateTime.now());
     if (_requestTime.length != 14) {
       print("_requestTime $_requestTime");
     }
@@ -78,7 +78,7 @@ class PaywayPartnerClientFormRequestService {
         opensslEncrypt(requestData.toMap(), partner.partnerPublicKey);
 
     final _requestTime =
-        requestTime ?? DateFormat("yMddhhmmss").format(DateTime.now());
+        requestTime ?? DateFormat("yMMddhhmmss").format(DateTime.now());
     if (_requestTime.length != 14) {
       print("_requestTime $_requestTime");
     }
