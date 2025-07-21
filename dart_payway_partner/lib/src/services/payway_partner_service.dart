@@ -42,7 +42,7 @@ class PaywayPartnerService {
     Map<String, dynamic> map =
         clientService.generateRegisterMerchantFormData(merchant);
 
-    var formData = FormData.fromMap(map);
+    // var formData = FormData.fromMap(map);
     try {
       final client = helper.client;
 
@@ -52,7 +52,7 @@ class PaywayPartnerService {
       }
 
       Response<String> response =
-          await client.post("/api/merchant-portal/online-self-activation/new-merchant", data: formData);
+          await client.post("/api/merchant-portal/online-self-activation/new-merchant", data: map);
 
       var _map = json.decode(response.data!) as Map<String, dynamic>;
       res = PaywayPartnerRegisterMerchantResponse.fromMap(_map);
@@ -96,7 +96,7 @@ class PaywayPartnerService {
     Map<String, dynamic> map =
         clientService.generateCheckMerchantFormData(merchant);
 
-    var formData = FormData.fromMap(map);
+    // var formData = FormData.fromMap(map);
     try {
       final client = helper.client;
 
@@ -106,7 +106,7 @@ class PaywayPartnerService {
       }
 
       Response<String> response =
-          await client.post("/api/merchant-portal/online-self-activation/get-mc-credential-info", data: formData);
+          await client.post("/api/merchant-portal/online-self-activation/get-mc-credential-info", data: map);
 
       var _map = json.decode(response.data!) as Map<String, dynamic>;
       res = PaywayPartnerCheckMerchantResponse.fromMap(_map);
