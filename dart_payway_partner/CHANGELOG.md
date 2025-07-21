@@ -1,3 +1,7 @@
+## 1.0.2+3
+- add ABA_PARTNER_REFERER_DOMAIN as Referer
+- change from tran_id to support trace_id and correlation_id 
+
 ## 1.0.2+2
 
 - fix date_format from yMddhhmmss to yMMddhhmmss
