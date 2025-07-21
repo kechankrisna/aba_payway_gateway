@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:dart_payway_partner/dart_payway_partner.dart';
 import 'package:encrypt/encrypt.dart';
+import 'package:logger/logger.dart';
 import 'package:test/test.dart';
 import 'package:dotenv/dotenv.dart';
 import 'dart:io' as io;
@@ -25,6 +26,7 @@ void main() {
         partnerPublicKey:
             utf8.decode(base64.decode(env['ABA_PARTNER_PUBLIC_KEY'] ?? "")),
         baseApiUrl: env['ABA_PARTNER_API_URL'] ?? '',
+        refererDomain: env['ABA_PARTNER_REFERER_DOMAIN'] ?? '',
       ));
     });
 
@@ -48,12 +50,13 @@ void main() {
             reason: "the url and token should be exist according to docs");
 
         expect(
-            registerResponse.status.tran_id!.isNotEmpty &&
+            registerResponse.status.trace_id!.isNotEmpty &&
                 registerResponse.status.code.isNotEmpty &&
-                registerResponse.status.message.isNotEmpty,
+                registerResponse.status.message.isNotEmpty &&
+                registerResponse.status.correlation_id!.isNotEmpty,
             true,
             reason:
-                "the status.tran_id,  status.code, status.message should be a string according to docs");
+                "the status.trace_id,  status.code, status.message should be a string according to docs");
       },
     );
 

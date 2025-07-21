@@ -51,6 +51,7 @@ class _MyHomePageState extends State<MyHomePage> {
       partnerPublicKey: utf8
           .decode(base64.decode(dotenv.env['ABA_PARTNER_PUBLIC_KEY'] ?? "")),
       baseApiUrl: dotenv.env['ABA_PARTNER_API_URL'] ?? '',
+      refererDomain: dotenv.env['ABA_PARTNER_REFERER_DOMAIN'] ?? '',
     ));
 
     super.initState();
