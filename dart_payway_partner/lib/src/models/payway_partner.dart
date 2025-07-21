@@ -9,6 +9,7 @@ class PaywayPartner {
   final String partnerPrivateKey;
   final String partnerPublicKey;
   final String baseApiUrl;
+  final String refererDomain;
 
   /// ## [PaywayPartner]
   /// `Represent and Hold Merchant Credential provided by aba bank supporter`
@@ -31,6 +32,7 @@ class PaywayPartner {
     required this.partnerPrivateKey,
     required this.partnerPublicKey,
     required this.baseApiUrl,
+    required this.refererDomain,
   });
 
   PaywayPartner copyWith({
@@ -41,6 +43,7 @@ class PaywayPartner {
     String? partnerPrivateKey,
     String? partnerPublicKey,
     String? baseApiUrl,
+    String? refererDomain,
   }) {
     return PaywayPartner(
       partnerName: partnerName ?? this.partnerName,
@@ -50,6 +53,7 @@ class PaywayPartner {
       partnerPrivateKey: partnerPrivateKey ?? this.partnerPrivateKey,
       partnerPublicKey: partnerPublicKey ?? this.partnerPublicKey,
       baseApiUrl: baseApiUrl ?? this.baseApiUrl,
+      refererDomain: refererDomain ?? this.refererDomain,
     );
   }
 
@@ -62,6 +66,7 @@ class PaywayPartner {
       'partnerPrivateKey': partnerPrivateKey,
       'partnerPublicKey': partnerPublicKey,
       'baseApiUrl': baseApiUrl,
+      'refererDomain': refererDomain,
     };
   }
 
@@ -74,6 +79,7 @@ class PaywayPartner {
       partnerPrivateKey: map['partnerPrivateKey'] as String,
       partnerPublicKey: map['partnerPublicKey'] as String,
       baseApiUrl: map['baseApiUrl'] as String,
+      refererDomain: map['refererDomain'] as String,
     );
   }
 
@@ -84,7 +90,7 @@ class PaywayPartner {
 
   @override
   String toString() {
-    return 'PaywayPartner(partnerName: $partnerName, partnerID: $partnerID, partnerKey: $partnerKey, partnerReferer: $partnerReferer, partnerPrivateKey: $partnerPrivateKey, partnerPublicKey: $partnerPublicKey, baseApiUrl: $baseApiUrl)';
+    return 'PaywayPartner(partnerName: $partnerName, partnerID: $partnerID, partnerKey: $partnerKey, partnerPrivateKey: $partnerPrivateKey, partnerPublicKey: $partnerPublicKey, baseApiUrl: $baseApiUrl, refererDomain: $refererDomain)';
   }
 
   @override
@@ -97,7 +103,8 @@ class PaywayPartner {
         other.partnerReferer == partnerReferer &&
         other.partnerPrivateKey == partnerPrivateKey &&
         other.partnerPublicKey == partnerPublicKey &&
-        other.baseApiUrl == baseApiUrl;
+        other.baseApiUrl == baseApiUrl &&
+        other.refererDomain == refererDomain;
   }
 
   @override
@@ -108,6 +115,7 @@ class PaywayPartner {
         partnerReferer.hashCode ^
         partnerPrivateKey.hashCode ^
         partnerPublicKey.hashCode ^
-        baseApiUrl.hashCode;
+        baseApiUrl.hashCode ^
+        refererDomain.hashCode;
   }
 }
