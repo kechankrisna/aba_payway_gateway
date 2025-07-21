@@ -65,22 +65,26 @@ class PaywayPartnerRegisterMerchantResponse {
 class PaywayPartnerRegisterMerchantResponseStatus {
   final String code;
   final String message;
-  final String? tran_id;
+  final String? trace_id;
+  final String? correlation_id;
   PaywayPartnerRegisterMerchantResponseStatus({
     required this.code,
     required this.message,
-    this.tran_id,
+    this.trace_id,
+    this.correlation_id,
   });
 
   PaywayPartnerRegisterMerchantResponseStatus copyWith({
     String? code,
     String? message,
-    String? tran_id,
+    String? trace_id,
+    String? correlation_id,
   }) {
     return PaywayPartnerRegisterMerchantResponseStatus(
       code: code ?? this.code,
       message: message ?? this.message,
-      tran_id: tran_id ?? this.tran_id,
+      trace_id: trace_id ?? this.trace_id,
+      correlation_id: correlation_id ?? this.correlation_id,
     );
   }
 
@@ -88,7 +92,8 @@ class PaywayPartnerRegisterMerchantResponseStatus {
     return <String, dynamic>{
       'code': code,
       'message': message,
-      'tran_id': tran_id,
+      'trace_id': trace_id,
+      'correlation_id': correlation_id,
     };
   }
 
@@ -97,7 +102,10 @@ class PaywayPartnerRegisterMerchantResponseStatus {
     return PaywayPartnerRegisterMerchantResponseStatus(
       code: map['code'] as String,
       message: map['message'] as String,
-      tran_id: map['tran_id'] != null ? map['tran_id'] as String : null,
+      trace_id: map['trace_id'] != null ? map['trace_id'] as String : null,
+      correlation_id: map['correlation_id'] != null
+          ? map['correlation_id'] as String
+          : null,
     );
   }
 
@@ -109,7 +117,7 @@ class PaywayPartnerRegisterMerchantResponseStatus {
 
   @override
   String toString() =>
-      'PaywayPartnerRegisterMerchantResponseStatus(code: $code, message: $message, tran_id: $tran_id)';
+      'PaywayPartnerRegisterMerchantResponseStatus(code: $code, message: $message, trace_id: $trace_id, correlation_id: $correlation_id)';
 
   @override
   bool operator ==(
@@ -118,9 +126,14 @@ class PaywayPartnerRegisterMerchantResponseStatus {
 
     return other.code == code &&
         other.message == message &&
-        other.tran_id == tran_id;
+        other.trace_id == trace_id &&
+        other.correlation_id == correlation_id;
   }
 
   @override
-  int get hashCode => code.hashCode ^ message.hashCode ^ tran_id.hashCode;
+  int get hashCode =>
+      code.hashCode ^
+      message.hashCode ^
+      trace_id.hashCode ^
+      correlation_id.hashCode;
 }
