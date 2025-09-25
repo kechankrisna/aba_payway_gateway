@@ -1,6 +1,6 @@
 name: flutter_payway
 description: This will implement dart payway for flutter project
-version: 0.0.1
+version: 0.0.1+1
 repository: https://github.com/kechankrisna/aba_payway_gateway/tree/main/flutter_payway
 
 environment:
