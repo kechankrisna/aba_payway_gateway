@@ -1,3 +1,7 @@
+## 1.0.2+4
+
+- add support intl > 0.19.0
+
 ## 1.0.2+3
 - add ABA_PARTNER_REFERER_DOMAIN as Referer
 - change from tran_id to support trace_id and correlation_id 

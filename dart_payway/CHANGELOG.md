@@ -1,3 +1,7 @@
+## 1.0.8+3
+
+- add support intl > 0.19.0
+
 ## 1.0.8+2
 
 - fixed missing returnDeeplink when has
