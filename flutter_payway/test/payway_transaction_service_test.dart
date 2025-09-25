@@ -83,7 +83,7 @@ void main() {
       String checkoutApiUrl =
           "http://localhost/api/v1/integrate/payway/checkout_page";
       var webURI = await service.generateTransactionCheckoutURI(
-          transaction: _transaction, checkoutApiUrl: checkoutApiUrl);
+          transaction: _transaction);
 
       expect(
           webURI.queryParameters['items'],
