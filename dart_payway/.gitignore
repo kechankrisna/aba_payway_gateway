@@ -9,3 +9,6 @@ example/ios
 example/macos
 example/web
 example/linux
+
+# FVM Version Cache
+.fvm/
