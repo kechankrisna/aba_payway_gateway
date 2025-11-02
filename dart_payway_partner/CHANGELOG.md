@@ -1,3 +1,6 @@
+## 1.0.2+5
+- add support intl > 0.20.0
+
 ## 1.0.2+4
 
 - add support intl > 0.19.0
