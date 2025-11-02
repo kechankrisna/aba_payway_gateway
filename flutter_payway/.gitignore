@@ -50,3 +50,6 @@ example/macos
 example/android
 example/ios
 .env
+
+# FVM Version Cache
+.fvm/

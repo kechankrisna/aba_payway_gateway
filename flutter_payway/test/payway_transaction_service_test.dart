@@ -11,7 +11,9 @@ void main() {
     setUpAll(() {
       io.HttpOverrides.global = null;
 
-      dotenv.testLoad(fileInput: io.File('.env').readAsStringSync());
+      dotenv.loadFromString(envString: io.File('.env').readAsStringSync());
+      print("===================");
+      print(dotenv.env);
 
       service = PaywayTransactionService(
           merchant: PaywayMerchant(
