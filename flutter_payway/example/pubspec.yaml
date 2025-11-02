@@ -37,8 +37,8 @@ dependencies:
   cupertino_icons: ^1.0.2
   flutter_payway:
     path: ../
-  dart_payway: #
-    path: ../../dart_payway
+  dart_payway: ^1.1.0+1
+    # path: ../../dart_payway
 
 dev_dependencies:
   flutter_test:

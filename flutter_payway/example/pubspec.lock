@@ -60,10 +60,11 @@ packages:
   dart_payway:
     dependency: "direct main"
     description:
-      path: "../../dart_payway"
-      relative: true
-    source: path
-    version: "1.0.8+3"
+      name: dart_payway
+      sha256: c8a187827a2765e7c6e3eeb9660384e0753b05be8cf955292e4926ae5a9b34a3
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.0+1"
   dio:
     dependency: transitive
     description:
@@ -99,7 +100,7 @@ packages:
       path: ".."
       relative: true
     source: path
-    version: "0.0.1+1"
+    version: "1.1.0+1"
   flutter_test:
     dependency: "direct dev"
     description: flutter

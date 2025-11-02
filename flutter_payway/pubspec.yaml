@@ -12,8 +12,8 @@ dependencies:
     sdk: flutter
 
   cupertino_icons: ^1.0.2
-  dart_payway: # ^1.0.8+3
-    path: ../dart_payway
+  dart_payway: ^1.1.0+1
+    # path: ../dart_payway
 
 dev_dependencies:
   flutter_test:
