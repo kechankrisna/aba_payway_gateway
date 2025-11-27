@@ -19,7 +19,7 @@ void main() {
         merchantApiName: env['ABA_PAYWAY_MERCHANT_NAME'] ?? '',
         merchantApiKey: env['ABA_PAYWAY_API_KEY'] ?? '',
         baseApiUrl: env['ABA_PAYWAY_API_URL'] ?? '',
-        refererDomain: "http://localhost",
+        refererDomain: env['ABA_PAYWAY_REFERER_DOMAIN'] ?? 'http://localhost:8080',
       ));
     });
 
