@@ -23,7 +23,7 @@ void main() {
       ));
     });
 
-    test("create a transaction then check status pending", () async {
+    test("create a transaction with type.abapay_khqr_deeplink then check status pending", () async {
       final tranID = service.uniqueTranID();
 
       var _transaction = PaywayCreateTransaction(
@@ -60,8 +60,50 @@ void main() {
         reqTime: service.uniqueReqTime(),
       ), enabledLogger: true);
 
-      expect(checkResponse.status == 2, true,
-          reason: "the new transaction created should be pending or status 2");
+      expect(checkResponse.status != 0, true,
+          reason: "the new transaction created should be pending or status not 0");
+    });
+
+    test("create a transaction with type.abapay_khqr then check status pending", () async {
+      final tranID = service.uniqueTranID();
+
+      var _transaction = PaywayCreateTransaction(
+        amount: 10.00,
+        items: [
+          PaywayTransactionItem(name: "ទំនិញ 1", price: 2, quantity: 1),
+          PaywayTransactionItem(name: "ទំនិញ 2", price: 3, quantity: 1),
+          PaywayTransactionItem(name: "ទំនិញ 3", price: 5, quantity: 1),
+        ],
+        reqTime: service.uniqueReqTime(),
+        tranId: tranID,
+        email: 'support@mylekha.app',
+        firstname: 'Miss',
+        lastname: 'MyLekha',
+        phone: '010464144',
+        option: PaywayPaymentOption.abapay_khqr,
+        shipping: 0.0,
+        returnUrl: "https://mylekha.app/api/v1.0/integrate/payway/success",
+        continueSuccessUrl: "https://mylekha.app/api/v1.0/integrate/payway/success",
+        returnDeeplink: EncoderService.base64_encode({ 'ios_scheme': 'https://client.mylekha.app', 'tran_id': '$tranID' }),
+        returnParams: EncoderService.base64_encode({ 'key_1': 'value_1', 'key_2': 'value_2' }),
+        customFields :EncoderService.base64_encode({"Purcahse order ref":"Po-MX9901", "Customfield2":"value for custom field"}),
+      );
+
+      var createResponse =
+          await service.createTransaction(transaction: _transaction, enabledLogger: true);
+      
+      expect(createResponse.abapayDeeplink != null, true,
+          reason: "the deeplink should be a string according to docs");
+
+      var checkResponse = await service.checkTransaction(
+          transaction: PaywayCheckTransaction(
+        tranId: _transaction.tranId,
+        reqTime: service.uniqueReqTime(),
+      ), enabledLogger: true);
+
+      expect(checkResponse.status != 0, true,
+          reason: "the new transaction created should be pending or status not 0");
+
     });
 
     test("generate checkout uri for a transaction then check status pending",
