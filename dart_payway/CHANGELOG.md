@@ -1,3 +1,6 @@
+## 1.1.0+2
+- fix test case for transaction with option abapay_khqr status check
+
 ## 1.1.0+1
 - add support intl > 0.20.0 for flutter_payway and dart_payway
 
