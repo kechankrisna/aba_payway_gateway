@@ -52,14 +52,16 @@ class PaywayTransactionService {
     var _transaction = transaction;
     if (![
       PaywayPaymentOption.abapay_deeplink,
-      PaywayPaymentOption.abapay_khqr_deeplink
+      PaywayPaymentOption.abapay_khqr_deeplink,
+      PaywayPaymentOption.abapay_khqr,
     ].contains(transaction.option)) {
       _transaction =
           _transaction.copyWith(option: PaywayPaymentOption.abapay_deeplink);
     }
     assert([
       PaywayPaymentOption.abapay_deeplink,
-      PaywayPaymentOption.abapay_khqr_deeplink
+      PaywayPaymentOption.abapay_khqr_deeplink,
+      PaywayPaymentOption.abapay_khqr,
     ].contains(_transaction.option));
 
     final clientService = PaywayClientFormRequestService(merchant: merchant);

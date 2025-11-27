@@ -3,6 +3,7 @@ enum PaywayPaymentOption {
   abapay,
   abapay_deeplink,
   abapay_khqr_deeplink,
+  abapay_khqr,
   bakong,
   alipay,
   wechat
@@ -13,6 +14,7 @@ const $PaywayPaymentOptionMap = {
   "abapay": PaywayPaymentOption.abapay,
   "abapay_deeplink": PaywayPaymentOption.abapay_deeplink,
   "abapay_khqr_deeplink": PaywayPaymentOption.abapay_khqr_deeplink,
+  "abapay_khqr": PaywayPaymentOption.abapay_khqr,
   "bakong": PaywayPaymentOption.bakong,
   "alipay": PaywayPaymentOption.alipay,
   "wechat": PaywayPaymentOption.wechat,

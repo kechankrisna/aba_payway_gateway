@@ -2,7 +2,7 @@ import 'package:dart_payway/dart_payway.dart';
 
 class PaywayCheckTransactionResponse {
   final int status;
-  final String description;
+  final String? description;
   final double amount;
   final double? totalAmount;
   final String apv;
@@ -21,7 +21,7 @@ class PaywayCheckTransactionResponse {
   final String? paymentType;
   PaywayCheckTransactionResponse({
     this.status = 11,
-    this.description = "Unknown Error",
+    this.description,
     this.amount = 0.00,
     this.totalAmount,
     this.apv = "",
@@ -63,7 +63,7 @@ class PaywayCheckTransactionResponse {
   factory PaywayCheckTransactionResponse.fromMap(Map<String, dynamic> map) {
     return PaywayCheckTransactionResponse(
       status: map['status']?.toInt() ?? -1,
-      description: map['description'] ?? '',
+      description: map['description'],
       amount: map['amount']?.toDouble() ?? 0.0,
       totalAmount: map['total_amount']?.toDouble(),
       apv: map['apv'] ?? '',

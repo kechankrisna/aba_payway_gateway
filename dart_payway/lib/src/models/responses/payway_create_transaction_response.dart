@@ -2,7 +2,7 @@ import 'package:dart_payway/dart_payway.dart';
 
 class PaywayCreateTransactionResponse {
   final PaywayTransactionStatus? status;
-  final String description;
+  final String? description;
   final String? qrString;
   final String? qrImage;
   final String? abapayDeeplink;
@@ -12,7 +12,7 @@ class PaywayCreateTransactionResponse {
 
   PaywayCreateTransactionResponse({
     this.status,
-    this.description = 'Unknown Error',
+    this.description,
     this.qrString,
     this.qrImage,
     this.abapayDeeplink,
