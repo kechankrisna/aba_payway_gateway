@@ -1,55 +1,27 @@
-Usage example:
+# dart_payway_partner has moved
 
-## PaywayPartnerService is required
-```dart
-var service = PaywayPartnerService(
-        partner: PaywayPartner(
-      partnerName: dotenv.env['ABA_PARTNER_NAME'] ?? '',
-      partnerID: dotenv.env['ABA_PARTNER_ID'] ?? '',
-      partnerKey: dotenv.env['ABA_PARTNER_KEY'] ?? '',
-      partnerPrivateKey: utf8
-          .decode(base64.decode(dotenv.env['ABA_PARTNER_PRIVATE_KEY'] ?? "")),
-      partnerPublicKey: utf8
-          .decode(base64.decode(dotenv.env['ABA_PARTNER_PUBLIC_KEY'] ?? "")),
-      baseApiUrl: dotenv.env['ABA_PARTNER_API_URL'] ?? '',
-    ));
+This package continues as **[`payway_partner`](https://pub.dev/packages/payway_partner)**
+in its own repository, next to the Node.js and PHP SDKs:
+
+**https://github.com/kechankrisna/payway-partner**
+
+## Migrate
+
+```yaml
+dependencies:
+  payway_partner: ^2.0.0
 ```
 
-## by register a new merchant, the merchant field is required
-
 ```dart
-final merchant = PaywayPartnerRegisterMerchant(
-      pushback_url: 'https://www.mylekha.org/',
-      redirect_url: 'https://www.mylekha.org/',
-      type: 0,
-      register_ref: referer_id,
-    );
-var registerResponse = await service.registerMerchant(merchant: merchant);
-
+// before
+import 'package:dart_payway_partner/dart_payway_partner.dart';
+// after
+import 'package:payway_partner/payway_partner.dart';
 ```
 
-## by checking the new registered merchant, the register_ref is required
-```dart
- final merchant = PaywayPartnerCheckMerchant(
-      register_ref: referer_id,
-    );
-var checkResponse = await service.checkMerchant(merchant: merchant);
-```
+Version 2.0.0 has breaking changes (camelCase fields, typed errors, required
+`currency`, TLS verification); see the
+[CHANGELOG](https://github.com/kechankrisna/payway-partner/blob/main/dart/CHANGELOG.md)
+for the full list.
 
-### to get hash string please use PaywayPartnerClientService
-
-```dart
-final clientService = PaywayPartnerClientService(partner);
-final str = clientService.getStr(request_time: _requestTime, request_data: request_data);
-final hash = clientService.getHash(str);
-```
-
-### to encrypt and decrypt using public key and private please use: PaywayPartnerClientFormRequestService
-
-```dart
-var service = PaywayPartnerClientFormRequestService(partner);
-var encrypted = service.opensslEncrypt(requestData.toMap(), partner.partnerPublicKey);
-var decrypted = service.opensslEncrypt(requestData.toMap(), partner.partnerPrivateKey);
-```
-# NOTE: 
-`please look flutte example folder for more information` 
+The 1.x source remains in this repository's git history.
