@@ -1,0 +1,5 @@
+
+# FVM Version Cache
+.fvm/
+# ABA PayWay documentation, kept for reference only; never commit or publish
+.aba-docs/

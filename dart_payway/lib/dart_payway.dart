@@ -1,8 +1,8 @@
-library dart_payway;
+/// ABA PayWay Ecommerce Checkout: purchase, check, close, refund and list
+/// transactions, get exchange rates, and verify payment callbacks.
+library;
 
-export './src/global.dart';
-export './src/strings.dart';
-export './src/models/models.dart';
-export './src/enumeration.dart';
-export './src/extension.dart';
-export './src/services/services.dart';
+export 'package:dio/dio.dart' show CancelToken;
+export 'src/exceptions.dart';
+export 'src/models/models.dart';
+export 'src/services/services.dart';

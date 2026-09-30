@@ -1,133 +1,135 @@
-import 'dart:convert';
-import 'dart:io';
-import 'package:dart_payway/dart_payway.dart' hide debugPrint, kIsWeb;
-import 'package:flutter/foundation.dart';
+// Demo only: this app embeds the merchant API key to call the PayWay sandbox
+// directly. In production, call PayWay from your server and never ship the
+// API key inside an app.
+//
+// Run with the package's sandbox .env:
+//   flutter run --dart-define-from-file=../.env
+import 'package:dart_payway/dart_payway.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-class MyHttpOverrides extends HttpOverrides {
-  @override
-  HttpClient createHttpClient(SecurityContext? context) {
-    return super.createHttpClient(context)
-      ..badCertificateCallback =
-          (X509Certificate cert, String host, int port) => true;
-  }
-}
+void main() => runApp(const PaywayDemoApp());
 
-void main() async {
-  HttpOverrides.global = MyHttpOverrides();
+// values from --dart-define-from-file; empty when not provided
+const _apiUrl = String.fromEnvironment('ABA_PAYWAY_API_URL');
+const _merchantId = String.fromEnvironment('ABA_PAYWAY_MERCHANT_ID');
+const _apiKey = String.fromEnvironment('ABA_PAYWAY_API_KEY');
+const _referer = String.fromEnvironment('ABA_PAYWAY_REFERER_DOMAIN');
 
-  await dotenv.load(fileName: ".env");
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+/// Demo of the dart_payway SDK.
+class PaywayDemoApp extends StatelessWidget {
+  /// Creates the demo app.
+  const PaywayDemoApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'PayWay Checkout Demo',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.teal),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const PaywayDemoPage(),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
+/// Buttons calling each API and a log of the results.
+class PaywayDemoPage extends StatefulWidget {
+  /// Creates the demo page.
+  const PaywayDemoPage({super.key});
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<PaywayDemoPage> createState() => _PaywayDemoPageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  late PaywayTransactionService service;
-  String? tranID = null;
-  @override
-  void initState() {
-    service = PaywayTransactionService(
-        merchant: PaywayMerchant(
-      merchantID: dotenv.env['ABA_PAYWAY_MERCHANT_ID'] ?? '',
-      merchantApiName: dotenv.env['ABA_PAYWAY_MERCHANT_NAME'] ?? '',
-      merchantApiKey: dotenv.env['ABA_PAYWAY_API_KEY'] ?? '',
-      baseApiUrl: dotenv.env['ABA_PAYWAY_API_URL'] ?? '',
-      refererDomain: "http://localhost",
-    ));
-    super.initState();
-    kIsWeb;
+class _PaywayDemoPageState extends State<PaywayDemoPage> {
+  final payway = PaywayService(
+    merchant: PaywayMerchant(
+      merchantId: _merchantId,
+      apiKey: _apiKey,
+      referer: _referer,
+      baseApiUrl: _apiUrl.isEmpty ? PaywayMerchant.sandboxBaseUrl : _apiUrl,
+    ),
+  );
+  final log = <String>[];
+  String? lastTranId;
+
+  Future<void> run(String label, Future<String> Function() action) async {
+    setState(() => log.insert(0, '$label…'));
+    String result;
+    try {
+      result = await action();
+    } on PaywayException catch (e) {
+      result = '$e';
+    }
+    setState(() => log[0] = '$label: $result');
   }
 
-  Future<void> createTransaction() async {
-    setState(() {
-      tranID = service.uniqueTranID();
-    });
-    var transaction = PaywayCreateTransaction(
-      amount: 10.00,
-      items: [
-        PaywayTransactionItem(name: "ទំនិញ 1", price: 2, quantity: 1),
-        PaywayTransactionItem(name: "ទំនិញ 2", price: 3, quantity: 1),
-        PaywayTransactionItem(name: "ទំនិញ 3", price: 5, quantity: 1),
-      ],
-      reqTime: service.uniqueReqTime(),
-      tranId: tranID!,
-      email: 'support@mylekha.app',
-      firstname: 'Miss',
-      lastname: 'My Lekha',
-      phone: '010464144',
-      option: PaywayPaymentOption.abapay_khqr_deeplink,
-      shipping: 0.0,
-      returnUrl:
-          "https://xdgacmihblkqdexzbmkw.supabase.co/functions/v1/payway_checkout_success",
-      continueSuccessUrl: "https://mylekha.app",
-      returnParams: EncoderService.base64_encode(
-          {"booking_id": "0032153b-8df2-40a3-b533-37622e7ecd37"}),
-      customFields: EncoderService.base64_encode(
-          {"booking_id": "0032153b-8df2-40a3-b533-37622e7ecd37"}),
+  Future<String> purchase() async {
+    final tranId = 'demo${DateTime.now().millisecondsSinceEpoch}';
+    final response = await payway.purchase(
+      PaywayPurchase(
+        tranId: tranId,
+        amount: 0.1,
+        currency: PaywayCurrency.usd,
+        paymentOption: PaywayPaymentOption.abapayKhqrDeeplink,
+        items: const [PaywayItem(name: 'Coffee', quantity: 1, price: 0.1)],
+      ),
     );
-
-    try {
-      var createResponse = await service.createTransaction(
-          transaction: transaction, enabledLogger: true);
-      debugPrint(createResponse.toString());
-    } catch (e) {}
+    if (response.isSuccess) lastTranId = tranId;
+    // open response.abapayDeeplink or render response.qrString as a QR code
+    return '${response.status.code} ${response.status.message} '
+        'deeplink=${response.abapayDeeplink != null}';
   }
 
-  Future<void> checkTransaction() async {
-    final transaction = PaywayCheckTransaction(
-      reqTime: service.uniqueReqTime(),
-      tranId: tranID!,
-    );
-    try {
-      var createResponse = await service.checkTransaction(
-          transaction: transaction, enabledLogger: true);
-      debugPrint(createResponse.toString());
-    } catch (e) {}
+  Future<String> checkStatus() async {
+    final tranId = lastTranId;
+    if (tranId == null) return 'create a purchase first';
+    final response = await payway.checkTransaction(tranId: tranId);
+    return response.isSuccess
+        ? '${response.data?.paymentStatus} (${response.data?.totalAmount})'
+        : '${response.status.code} ${response.status.message}';
+  }
+
+  Future<String> exchangeRates() async {
+    final response = await payway.getExchangeRates();
+    final usd = response.rates['usd'];
+    return usd == null
+        ? '${response.status.code} ${response.status.message}'
+        : 'USD sell ${usd.sell} / buy ${usd.buy} riel';
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            TextButton(
-                onPressed: createTransaction,
-                child: Text("create Transaction")),
-            TextButton(
-                onPressed: checkTransaction, child: Text("check Transaction"))
-          ],
-        ),
+      appBar: AppBar(title: const Text('PayWay Checkout Demo')),
+      body: Column(
+        children: [
+          Wrap(
+            spacing: 8,
+            children: [
+              FilledButton(
+                onPressed: () => run('purchase (KHQR)', purchase),
+                child: const Text('purchase'),
+              ),
+              OutlinedButton(
+                onPressed: () => run('check status', checkStatus),
+                child: const Text('check status'),
+              ),
+              OutlinedButton(
+                onPressed: () => run('exchange rates', exchangeRates),
+                child: const Text('exchange rates'),
+              ),
+            ],
+          ),
+          const Divider(),
+          Expanded(
+            child: ListView(
+              padding: const EdgeInsets.all(12),
+              children: [for (final line in log) Text(line)],
+            ),
+          ),
+        ],
       ),
     );
   }
