@@ -1,16 +1,19 @@
-# example
+# dart_payway example
 
-A new Flutter project.
+A Flutter demo of [`dart_payway`](https://pub.dev/packages/dart_payway)
+against the ABA PayWay checkout **sandbox**: create a KHQR purchase, check
+its status, and read exchange rates.
 
-## Getting Started
+> Demo only. This app embeds the merchant API key to call PayWay directly.
+> In production, call PayWay from your server and never ship the API key
+> inside an app.
 
-This project is a starting point for a Flutter application.
+```sh
+flutter run --dart-define-from-file=../.env
+```
 
-A few resources to get you started if this is your first Flutter project:
+The `.env` is the package's sandbox file (copy `../.env.example`).
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+```sh
+flutter test
+```
