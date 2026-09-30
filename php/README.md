@@ -5,7 +5,7 @@ PHP client for the ABA PayWay **Ecommerce Checkout** API. It is the PHP twin of
 [`spec/`](../spec).
 
 ```bash
-composer require aba_payway_gateway/php_payway
+composer require kechankrisna/php_payway
 ```
 
 Requires PHP 8.3+ with `ext-json` and `ext-openssl`. The default HTTP client
