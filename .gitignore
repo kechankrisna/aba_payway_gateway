@@ -4,6 +4,9 @@
 *.env
 !.env.example
 
+# logs, e.g. saved test runs: they show merchant ids and request payloads
+*.log
+
 # ABA PayWay documentation, kept for reference only; never commit or publish
 .aba-docs/
 

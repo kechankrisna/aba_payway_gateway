@@ -10,9 +10,16 @@ PaywayPurchaseResponse _$PaywayPurchaseResponseFromJson(
   Map<String, dynamic> json,
 ) => PaywayPurchaseResponse(
   status: PaywayStatus.fromJson(json['status'] as Map<String, dynamic>),
-  qrString: nullableStringFromJson(json['qr_string']),
-  abapayDeeplink: nullableStringFromJson(json['abapay_deeplink']),
-  checkoutQrUrl: nullableStringFromJson(json['checkout_qr_url']),
+  qrString: nullableStringFromJson(_readQrString(json, 'qr_string')),
+  qrImage: nullableStringFromJson(_readQrImage(json, 'qr_image')),
+  abapayDeeplink: nullableStringFromJson(
+    _readDeeplink(json, 'abapay_deeplink'),
+  ),
+  checkoutQrUrl: nullableStringFromJson(
+    _readCheckoutQrUrl(json, 'checkout_qr_url'),
+  ),
+  appStore: nullableStringFromJson(json['app_store']),
+  playStore: nullableStringFromJson(json['play_store']),
 );
 
 Map<String, dynamic> _$PaywayPurchaseResponseToJson(
@@ -20,6 +27,9 @@ Map<String, dynamic> _$PaywayPurchaseResponseToJson(
 ) => <String, dynamic>{
   'status': instance.status.toJson(),
   'qr_string': instance.qrString,
+  'qr_image': instance.qrImage,
   'abapay_deeplink': instance.abapayDeeplink,
   'checkout_qr_url': instance.checkoutQrUrl,
+  'app_store': instance.appStore,
+  'play_store': instance.playStore,
 };

@@ -10,6 +10,7 @@ PaywayStatus _$PaywayStatusFromJson(Map<String, dynamic> json) => PaywayStatus(
   code: stringFromJson(json['code']),
   message: stringFromJson(json['message']),
   tranId: nullableStringFromJson(json['tran_id']),
+  traceId: nullableStringFromJson(json['trace_id']),
 );
 
 Map<String, dynamic> _$PaywayStatusToJson(PaywayStatus instance) =>
@@ -17,4 +18,5 @@ Map<String, dynamic> _$PaywayStatusToJson(PaywayStatus instance) =>
       'code': instance.code,
       'message': instance.message,
       'tran_id': ?instance.tranId,
+      'trace_id': ?instance.traceId,
     };
