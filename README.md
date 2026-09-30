@@ -7,7 +7,7 @@ For the PayWay *partner* API (merchant onboarding), see
 | Folder | Package | Status |
 |---|---|---|
 | [`dart/`](dart/README.md) | [`dart_payway`](https://pub.dev/packages/dart_payway) (pub.dev) | 2.0.0: every checkout API, callback verification, tested against ABA's PHP samples and the sandbox |
-| [`flutter/`](flutter/README.md) | [`flutter_payway`](https://pub.dev/packages/flutter_payway) (pub.dev) | 1.x widgets, built on `dart_payway` 1.x |
+| [`flutter/`](flutter/README.md) | [`flutter_payway`](https://pub.dev/packages/flutter_payway) (pub.dev) | 2.0.0: payment method picker with the ABA PAY, KHQR and card logos, built on `dart_payway` 2.0.0 |
 | [`php/`](php/README.md) | [`kechankrisna/php_payway`](https://packagist.org/packages/kechankrisna/php_payway) (Packagist) | 2.0.0: every checkout API, callback verification, tested against ABA's PHP samples and the sandbox |
 | [`kotlin/`](kotlin/) | not published | Kotlin Multiplatform prototype |
 | `node/` | planned | — |

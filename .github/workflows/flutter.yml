@@ -1,0 +1,41 @@
+name: flutter
+
+on:
+  push:
+    branches: [main]
+    paths: ['flutter/**', '.github/workflows/flutter.yml']
+  pull_request:
+    paths: ['flutter/**', '.github/workflows/flutter.yml']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+defaults:
+  run:
+    working-directory: flutter
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+      - run: flutter pub get
+      - name: Formatting
+        run: dart format --output=none --set-exit-if-changed lib test example/lib example/test
+      - run: flutter analyze --fatal-infos
+      - run: flutter test
+      - name: Publish dry run
+        # the only warning allowed is a dirty git tree from pub get
+        run: flutter pub publish --dry-run
+
+      - name: Example
+        working-directory: flutter/example
+        run: |
+          flutter pub get
+          flutter analyze --fatal-infos
+          flutter test
