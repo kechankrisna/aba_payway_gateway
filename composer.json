@@ -1,0 +1,52 @@
+{
+    "name": "aba_payway_gateway/php_payway",
+    "description": "ABA PayWay Ecommerce Checkout client for PHP.",
+    "type": "library",
+    "license": "proprietary",
+    "homepage": "https://github.com/kechankrisna/payway-checkout/tree/main/php",
+    "authors": [
+        {
+            "name": "kechankrisna",
+            "email": "ke.chankrisna168@gmail.com"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/kechankrisna/payway-checkout/issues",
+        "source": "https://github.com/kechankrisna/payway-checkout"
+    },
+    "require": {
+        "guzzlehttp/guzzle": "^7.4.5",
+        "netresearch/jsonmapper": "^4.2"
+    },
+    "require-dev": {
+        "pestphp/pest-plugin": "^1.1",
+        "pestphp/pest-plugin-laravel": "^1.4",
+        "pestphp/pest-plugin-parallel": "^1.2",
+        "phpunit/phpunit": "^9.6"
+    },
+    "autoload": {
+        "psr-4": {
+            "PhpPayway\\": "php/src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "php/tests/"
+        }
+    },
+    "scripts": {
+        "test": "pest --configuration php/phpunit.xml"
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true,
+            "php-http/discovery": true
+        },
+        "platform-check": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
