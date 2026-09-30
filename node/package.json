@@ -1,0 +1,67 @@
+{
+  "name": "@kechankrisna/payway-checkout",
+  "version": "2.0.0",
+  "description": "ABA PayWay Ecommerce Checkout client for Node.js: purchase (KHQR, ABA Mobile deep link, hosted page), check, list, close, refund, exchange rates and callback verification.",
+  "keywords": [
+    "aba",
+    "payway",
+    "cambodia",
+    "khqr",
+    "payment",
+    "checkout",
+    "sdk"
+  ],
+  "license": "MIT",
+  "author": "Ke Chankrisna",
+  "homepage": "https://github.com/kechankrisna/payway-checkout/tree/main/node#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kechankrisna/payway-checkout.git",
+    "directory": "node"
+  },
+  "bugs": "https://github.com/kechankrisna/payway-checkout/issues",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=22"
+  },
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test": "vitest run",
+    "test:unit": "vitest run --exclude test/integration.test.ts",
+    "prepublishOnly": "npm run typecheck && npm run lint && npm run test:unit && npm run build"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/node": "^22.20.4",
+    "eslint": "^10.11.0",
+    "eslint-config-prettier": "^10.1.8",
+    "globals": "^17.12.0",
+    "prettier": "^3.9.9",
+    "typescript": "~6.0",
+    "typescript-eslint": "^8.71.0",
+    "vitest": "^5.0.2"
+  }
+}

@@ -1,0 +1,41 @@
+# Publishes node/ (@kechankrisna/payway-checkout) to npm when a tag like
+# node-v2.0.1 is pushed. Uses npm trusted publishing (OIDC), so no token is
+# needed. One-time setup on npmjs.com: the package → Settings → Trusted
+# publishing → GitHub Actions, repository kechankrisna/payway-checkout,
+# workflow release-node.yml.
+name: release-node
+
+on:
+  push:
+    tags: ['node-v[0-9]+.[0-9]+.[0-9]+*']
+
+permissions:
+  contents: read
+  id-token: write
+
+defaults:
+  run:
+    working-directory: node
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          registry-url: https://registry.npmjs.org
+      - name: Tag matches package.json
+        run: |
+          version="${GITHUB_REF_NAME#node-v}"
+          test "$(node -p "require('./package.json').version")" = "$version" \
+            || { echo "::error::tag $GITHUB_REF_NAME does not match package.json"; exit 1; }
+      - name: npm supports trusted publishing (11.5.1+)
+        run: |
+          npm --version
+          npx --yes semver -r '>=11.5.1' "$(npm --version)" >/dev/null \
+            || npm install -g npm@latest
+      - run: npm ci
+      # prepublishOnly runs typecheck, lint, unit tests and build
+      - run: npm publish
