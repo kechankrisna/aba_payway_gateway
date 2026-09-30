@@ -2,7 +2,7 @@
     "name": "kechankrisna/php_payway",
     "description": "ABA PayWay Ecommerce Checkout client for PHP: purchase, check, close, refund and list transactions, exchange rates, and callback verification.",
     "type": "library",
-    "license": "proprietary",
+    "license": "MIT",
     "homepage": "https://github.com/kechankrisna/payway-checkout/tree/main/php",
     "authors": [
         {
