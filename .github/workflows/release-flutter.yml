@@ -1,0 +1,19 @@
+# Publishes flutter/ (flutter_payway) to pub.dev when a tag like
+# flutter-v2.0.1 is pushed. One-time setup on pub.dev: flutter_payway →
+# Admin → Automated publishing → GitHub Actions, repository
+# kechankrisna/payway-checkout, tag pattern flutter-v{{version}}.
+#
+# pub.dev's reusable workflow installs Flutter for Flutter packages.
+name: release-flutter
+
+on:
+  push:
+    tags: ['flutter-v[0-9]+.[0-9]+.[0-9]+*']
+
+jobs:
+  publish:
+    permissions:
+      id-token: write
+    uses: dart-lang/setup-dart/.github/workflows/publish.yml@v1
+    with:
+      working-directory: flutter
