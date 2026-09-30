@@ -13,5 +13,7 @@
 /kotlin             export-ignore
 /spec               export-ignore
 /php/tests          export-ignore
-/php/phpunit.xml    export-ignore
+/php/phpunit.xml.dist export-ignore
+/php/phpstan.neon   export-ignore
+/.php-cs-fixer.dist.php export-ignore
 /php/.env.example   export-ignore
