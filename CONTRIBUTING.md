@@ -33,11 +33,14 @@ dart test -x integration
 dart test
 ```
 
-PHP (from the repository root; its tests call the sandbox):
+PHP (from the repository root):
 
 ```sh
 composer install
-composer test
+composer test:unit   # offline, includes the known answers
+composer analyse     # PHPStan, level max
+composer cs          # coding style (composer cs:fix to apply)
+composer test        # also runs the integration tests if php/.env exists
 ```
 
 ## Known answers
