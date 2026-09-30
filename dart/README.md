@@ -142,11 +142,16 @@ final payway = PaywayService(
 ```sh
 dart test -x integration
 dart test -t integration
+PAYWAY_ENV_FILE=.env.production dart test -t integration
 ```
 
 The first runs the offline tests. Their expected hashes and callback
 signatures come from ABA's own PHP samples
-(`spec/test-vectors/php_known_answers.php` at the repository root). The second calls the checkout
-sandbox and needs a `.env` (copy `.env.example`).
+(`spec/test-vectors/php_known_answers.php` at the repository root).
+
+The others call PayWay with the credentials in `.env` (copy `.env.example`)
+or in the file named by `PAYWAY_ENV_FILE`. They create a 0.10 USD
+transaction and close it, so a file pointing at production is refused
+unless you also set `PAYWAY_ALLOW_PRODUCTION=true`.
 
 See the `example` folder for a Flutter demo.

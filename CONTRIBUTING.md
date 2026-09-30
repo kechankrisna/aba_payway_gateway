@@ -19,8 +19,10 @@ documentation in `.aba-docs/` (ignored): it is not ours to publish.
 
 ## Tests
 
-Dart: formatting, analysis, offline tests, then sandbox tests (need
-`dart/.env`).
+Dart: formatting, analysis, offline tests, then integration tests. The
+integration tests use `dart/.env`, or the file named by `PAYWAY_ENV_FILE`
+(e.g. `PAYWAY_ENV_FILE=.env.production`). They create and close a 0.10 USD
+transaction, so production is refused unless `PAYWAY_ALLOW_PRODUCTION=true`.
 
 ```sh
 cd dart
