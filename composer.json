@@ -1,5 +1,5 @@
 {
-    "name": "aba_payway_gateway/php_payway",
+    "name": "kechankrisna/php_payway",
     "description": "ABA PayWay Ecommerce Checkout client for PHP: purchase, check, close, refund and list transactions, exchange rates, and callback verification.",
     "type": "library",
     "license": "proprietary",

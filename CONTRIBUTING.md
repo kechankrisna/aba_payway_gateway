@@ -7,7 +7,7 @@
 | `spec/` | shared known answers (`spec/test-vectors/`) and throwaway RSA keys (`spec/fixtures/`) | PHP to regenerate |
 | `dart/` | `dart_payway` | Dart 3.9+ |
 | `flutter/` | `flutter_payway` | Flutter |
-| `php/` + `composer.json` | `aba_payway_gateway/php_payway` | PHP, Composer |
+| `php/` + `composer.json` | `kechankrisna/php_payway` | PHP, Composer |
 | `kotlin/` | unpublished | Gradle |
 
 ## Secrets
