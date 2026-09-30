@@ -7,6 +7,9 @@ is still `PhpPayway`, but the API is new: see the README.
 
 ### Breaking changes
 
+- The Composer package is renamed `kechankrisna/php_payway` (was
+  `aba_payway_gateway/php_payway`):
+  `composer remove aba_payway_gateway/php_payway && composer require kechankrisna/php_payway`.
 - PHP 8.3+ is required.
 - `PaywayTransactionService` is replaced by `PaywayService`; the request and
   response classes are replaced by `Model\Purchase`, `Model\Item`,
