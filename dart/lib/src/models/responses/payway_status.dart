@@ -22,8 +22,17 @@ class PaywayStatus {
   @JsonKey(fromJson: nullableStringFromJson)
   final String? tranId;
 
+  /// PayWay log id for debugging, when PayWay returns one
+  @JsonKey(fromJson: nullableStringFromJson)
+  final String? traceId;
+
   /// Creates a [PaywayStatus].
-  const PaywayStatus({required this.code, required this.message, this.tranId});
+  const PaywayStatus({
+    required this.code,
+    required this.message,
+    this.tranId,
+    this.traceId,
+  });
 
   /// Whether PayWay answered `00` (or `0`).
   bool get isSuccess => code == '00' || code == '0';
@@ -32,12 +41,12 @@ class PaywayStatus {
   factory PaywayStatus.fromJson(Map<String, dynamic> json) =>
       _$PaywayStatusFromJson(json);
 
-  /// PayWay's JSON form; an absent tran_id is left out.
+  /// PayWay's JSON form; absent ids are left out.
   Map<String, dynamic> toJson() => _$PaywayStatusToJson(this);
 
   @override
   String toString() =>
-      'PaywayStatus(code: $code, message: $message, tranId: $tranId)';
+      'PaywayStatus(code: $code, message: $message, tranId: $tranId, traceId: $traceId)';
 
   @override
   bool operator ==(Object other) =>
@@ -45,8 +54,9 @@ class PaywayStatus {
       other is PaywayStatus &&
           other.code == code &&
           other.message == message &&
-          other.tranId == tranId;
+          other.tranId == tranId &&
+          other.traceId == traceId;
 
   @override
-  int get hashCode => Object.hash(code, message, tranId);
+  int get hashCode => Object.hash(code, message, tranId, traceId);
 }

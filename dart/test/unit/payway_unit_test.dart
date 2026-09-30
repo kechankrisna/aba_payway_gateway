@@ -388,6 +388,39 @@ void main() {
       },
     );
 
+    test('purchase reads production\'s camelCase fields too', () async {
+      // shape of a real production reply (values shortened)
+      final adapter = FakeAdapter(
+        (_) async => jsonResponse({
+          'qrString': '000201...',
+          'qrImage': 'data:image/png;base64,iVBORw0KGgo=',
+          'abapay_deeplink': 'abamobilebank://ababank.com?type=payway',
+          'app_store': 'https://itunes.apple.com/app/id968860649',
+          'play_store':
+              'https://play.google.com/store/apps/details?id=com.paygo24.ibank',
+          'description': 'success',
+          'status': {
+            'version': 'v3',
+            'code': '00',
+            'message': 'Success!',
+            'tran_id': 'order-1001',
+            'lang': 'en',
+            'trace_id': '19b80de5',
+          },
+        }, 200),
+      );
+
+      final response = await serviceWith(adapter).purchase(fullPurchase);
+
+      expect(response.isSuccess, true);
+      expect(response.qrString, '000201...');
+      expect(response.qrImage, startsWith('data:image/png'));
+      expect(response.abapayDeeplink, startsWith('abamobilebank://'));
+      expect(response.playStore, contains('com.paygo24.ibank'));
+      expect(response.checkoutQrUrl, isNull);
+      expect(response.status.traceId, '19b80de5');
+    });
+
     test('purchase needs abapayKhqrDeeplink; others use checkoutHtml', () {
       final service = serviceWith(
         FakeAdapter((_) async => throw UnimplementedError()),

@@ -7,6 +7,9 @@ Rebuilt against the current ABA PayWay Ecommerce Checkout documentation.
   (RSA-encrypted `merchant_auth`) and `getExchangeRates`
 - `verifyCallback` / `parseCallback`: verify the `X-PayWay-HMAC-SHA512`
   signature of the payment callback, byte for byte like ABA's PHP sample
+- `PaywayPurchaseResponse` reads production's field names (`qrString`,
+  `qrImage`, `app_store`, `play_store`) as well as the documented sandbox ones
+  (`qr_string`, `checkout_qr_url`); `PaywayStatus.traceId`
 
 ### Fixes
 - `req_time` is UTC `YYYYMMDDHHmmss`; 1.x used a 12-hour local clock
