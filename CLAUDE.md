@@ -29,6 +29,9 @@ wrong.
   by path: a `dart/` change reaches it only after a Dart release.
 - `composer.json` must stay at the repository root for Packagist;
   `.gitattributes` keeps the other SDKs out of the Composer archive.
+- Kotlin (`kotlin/`) is JVM-only and server-side. Keep `VERSION_NAME` in
+  `kotlin/gradle.properties` and `PaywayService.SDK_VERSION` equal (a test
+  checks); publishing credentials come only from environment variables.
 - Dart: after editing an annotated model, run
   `dart run build_runner build --delete-conflicting-outputs` and commit the
   `*.g.dart` files. CI resolves with `dart pub get --no-example`.
