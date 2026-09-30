@@ -1,0 +1,71 @@
+name: dart
+
+on:
+  push:
+    branches: [main]
+    paths: ['dart/**', 'spec/**', '.github/workflows/dart.yml']
+  pull_request:
+    paths: ['dart/**', 'spec/**', '.github/workflows/dart.yml']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+defaults:
+  run:
+    working-directory: dart
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dart-lang/setup-dart@v1
+        with:
+          sdk: stable
+      # example/ is a Flutter app, analyzed by the example job
+      - run: dart pub get --no-example
+
+      - name: Generated code is up to date
+        run: |
+          dart run build_runner build --delete-conflicting-outputs
+          if [ -n "$(git status --porcelain -- lib)" ]; then
+            git status --porcelain -- lib
+            echo "::error::*.g.dart files are stale: run 'dart run build_runner build --delete-conflicting-outputs' and commit"
+            exit 1
+          fi
+
+      - name: Formatting
+        run: dart format --output=none --set-exit-if-changed lib test
+      - run: dart analyze --fatal-infos
+      - name: Unit tests (hashes checked against ABA's PHP samples)
+        run: dart test -x integration
+
+      # Optional: set the repository secret CHECKOUT_SANDBOX_ENV to the
+      # content of a checkout sandbox .env (see dart/.env.example).
+      - name: Sandbox integration tests
+        env:
+          SANDBOX_ENV: ${{ secrets.CHECKOUT_SANDBOX_ENV }}
+        if: env.SANDBOX_ENV != ''
+        run: |
+          printf '%s\n' "$SANDBOX_ENV" > .env
+          dart test -t integration
+
+      - name: Publish checks
+        run: dart pub publish --dry-run
+
+  example:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+      - run: flutter pub get
+        working-directory: dart/example
+      - run: dart format --output=none --set-exit-if-changed lib test
+        working-directory: dart/example
+      - run: flutter analyze
+        working-directory: dart/example
+      - run: flutter test
+        working-directory: dart/example

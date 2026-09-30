@@ -1,0 +1,17 @@
+* text=auto eol=lf
+
+# Composer installs this repository (composer.json at the root). Keep the
+# other SDKs, specs, tests and tooling out of the PHP dist archive.
+/.github            export-ignore
+/.gitattributes     export-ignore
+/.gitignore         export-ignore
+/CLAUDE.md          export-ignore
+/CONTRIBUTING.md    export-ignore
+/composer.lock      export-ignore
+/dart               export-ignore
+/flutter            export-ignore
+/kotlin             export-ignore
+/spec               export-ignore
+/php/tests          export-ignore
+/php/phpunit.xml    export-ignore
+/php/.env.example   export-ignore

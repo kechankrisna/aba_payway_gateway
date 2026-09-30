@@ -1,5 +1,29 @@
+# credentials: every .env file except the templates
+.env
+.env.*
+*.env
+!.env.example
 
-# FVM Version Cache
-.fvm/
 # ABA PayWay documentation, kept for reference only; never commit or publish
 .aba-docs/
+
+# PHP (installed at the repository root, see composer.json)
+/vendor/
+.phpunit.cache/
+.phpunit.result.cache
+.php-cs-fixer.cache
+
+# Dart / Flutter
+.dart_tool/
+build/
+
+# Kotlin / Gradle
+.gradle/
+local.properties
+
+# IDEs and OS files
+.idea/
+*.iml
+.vscode/
+.fvm/
+.DS_Store
