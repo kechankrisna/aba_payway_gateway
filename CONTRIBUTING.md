@@ -55,9 +55,13 @@ Every SDK should reproduce these hashes and callback signatures.
 
 | SDK | Bump | Publish |
 |---|---|---|
-| Dart | `dart/pubspec.yaml`, `dart/lib/src/version.dart`, `dart/CHANGELOG.md` | `cd dart && dart pub publish` |
+| Dart | `dart/pubspec.yaml`, `dart/lib/src/version.dart`, `dart/CHANGELOG.md` | push tag `dart-vX.Y.Z`; `.github/workflows/release-dart.yml` publishes |
 | Flutter | `flutter/pubspec.yaml` | `cd flutter && flutter pub publish` |
 | PHP | tag `vX.Y.Z` | Packagist reads the tag (composer.json at the root) |
 
 Plain `v*` tags are PHP releases; use prefixed tags (e.g. `dart-v2.0.1`) for
-the others.
+the others. Packagist ignores tags that do not parse as versions.
+
+One-time setup for Dart: on pub.dev, dart_payway → Admin → Automated
+publishing → GitHub Actions, repository `kechankrisna/payway-checkout`, tag
+pattern `dart-v{{version}}`.
