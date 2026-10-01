@@ -1,9 +1,8 @@
 # CLAUDE.md
 
 ABA PayWay **Ecommerce Checkout** SDKs: Dart (`dart/`), Flutter widgets
-(`flutter/`), PHP (`php/` + root `composer.json`), Kotlin (`kotlin/`) and Node.js
-(`node/`),
-with shared known answers in `spec/`. Commands and releases are in
+(`flutter/`), PHP (`php/` + root `composer.json`), Kotlin (`kotlin/`) and
+Node.js (`node/`), with shared known answers in `spec/`. Commands and releases are in
 [CONTRIBUTING.md](CONTRIBUTING.md); this file lists what is easy to get
 wrong.
 
