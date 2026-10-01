@@ -1,0 +1,52 @@
+name: node
+
+on:
+  push:
+    branches: [main]
+    paths: ['node/**', 'spec/**', '.github/workflows/node.yml']
+  pull_request:
+    paths: ['node/**', 'spec/**', '.github/workflows/node.yml']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+defaults:
+  run:
+    working-directory: node
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node: [22, 24]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+          cache: npm
+          cache-dependency-path: node/package-lock.json
+      - run: npm ci
+      - run: npm audit --omit=dev
+      - run: npm run typecheck
+      - name: Lint (ESLint)
+        run: npm run lint
+      - name: Formatting (Prettier)
+        run: npm run format:check
+      - name: Unit tests (hashes checked against ABA's PHP samples)
+        run: npm run test:unit
+      - run: npm run build
+      - run: npm pack --dry-run
+
+      # Optional: set the repository secret CHECKOUT_SANDBOX_ENV to the
+      # content of a checkout sandbox .env (see node/.env.example).
+      - name: Sandbox integration tests
+        env:
+          SANDBOX_ENV: ${{ secrets.CHECKOUT_SANDBOX_ENV }}
+        if: env.SANDBOX_ENV != '' && matrix.node == 24
+        run: |
+          printf '%s\n' "$SANDBOX_ENV" > .env
+          npx vitest run test/integration.test.ts

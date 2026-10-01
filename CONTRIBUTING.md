@@ -9,6 +9,7 @@
 | `flutter/` | `flutter_payway` | Flutter |
 | `php/` + `composer.json` | `kechankrisna/php_payway` | PHP, Composer |
 | `kotlin/` | `io.github.kechankrisna:payway-checkout` | JDK 17+, Gradle wrapper |
+| `node/` | `@kechankrisna/payway-checkout` | Node.js 22+, npm |
 
 ## Secrets
 
@@ -63,6 +64,17 @@ cd kotlin
 ./gradlew integrationTest
 ```
 
+Node.js (offline tests; `npx vitest run test/integration.test.ts` runs the
+integration tests with `node/.env`, same rules as Dart):
+
+```sh
+cd node
+npm ci
+npm run typecheck && npm run lint && npm run format:check
+npm run test:unit
+npm run build
+```
+
 ## Known answers
 
 `spec/test-vectors/php_known_answers.php` runs the PHP samples from ABA's
@@ -82,6 +94,7 @@ Every SDK should reproduce these hashes and callback signatures.
 | Flutter | `flutter/pubspec.yaml`, `flutter/CHANGELOG.md` | push tag `flutter-vX.Y.Z`; `.github/workflows/release-flutter.yml` publishes |
 | PHP | tag `vX.Y.Z` | Packagist reads the tag (composer.json at the root) |
 | Kotlin | `kotlin/gradle.properties` (`VERSION_NAME`), `SDK_VERSION` in `PaywayService.kt`, `kotlin/CHANGELOG.md` | push tag `kotlin-vX.Y.Z`; `.github/workflows/release-kotlin.yml` publishes to Maven Central |
+| Node.js | `node/package.json`, `node/src/version.ts`, `node/CHANGELOG.md` | push tag `node-vX.Y.Z`; `.github/workflows/release-node.yml` publishes |
 
 Plain `v*` tags are PHP releases; use prefixed tags (e.g. `dart-v2.0.1`) for
 the others. Packagist ignores tags that do not parse as versions.
@@ -96,3 +109,8 @@ One-time setup for Kotlin: on central.sonatype.com, verify the namespace
 and publish its public key to a keyserver; then add the repository secrets
 `MAVEN_CENTRAL_USERNAME`, `MAVEN_CENTRAL_PASSWORD` (the token),
 `SIGNING_KEY` (ASCII-armored private key) and `SIGNING_PASSWORD`.
+
+One-time setup for Node.js (npm trusted publishing, no token): on
+npmjs.com, `@kechankrisna/payway-checkout` → Settings → Trusted publishing →
+GitHub Actions, repository `kechankrisna/payway-checkout`, workflow
+`release-node.yml`.
