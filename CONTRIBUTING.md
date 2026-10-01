@@ -8,7 +8,7 @@
 | `dart/` | `dart_payway` | Dart 3.9+ |
 | `flutter/` | `flutter_payway` | Flutter |
 | `php/` + `composer.json` | `kechankrisna/php_payway` | PHP, Composer |
-| `kotlin/` | unpublished | Gradle |
+| `kotlin/` | `io.github.kechankrisna:payway-checkout` | JDK 17+, Gradle wrapper |
 | `node/` | `@kechankrisna/payway-checkout` | Node.js 22+, npm |
 
 ## Secrets
@@ -55,6 +55,15 @@ composer cs          # coding style (composer cs:fix to apply)
 composer test        # also runs the integration tests if php/.env exists
 ```
 
+Kotlin (compile with warnings as errors, ktlint, offline tests; integration
+tests read `kotlin/.env` or `PAYWAY_ENV_FILE`, like Dart):
+
+```sh
+cd kotlin
+./gradlew build            # ./gradlew ktlintFormat fixes formatting
+./gradlew integrationTest
+```
+
 Node.js (offline tests; `npx vitest run test/integration.test.ts` runs the
 integration tests with `node/.env`, same rules as Dart):
 
@@ -84,6 +93,7 @@ Every SDK should reproduce these hashes and callback signatures.
 | Dart | `dart/pubspec.yaml`, `dart/lib/src/version.dart`, `dart/CHANGELOG.md` | push tag `dart-vX.Y.Z`; `.github/workflows/release-dart.yml` publishes |
 | Flutter | `flutter/pubspec.yaml`, `flutter/CHANGELOG.md` | push tag `flutter-vX.Y.Z`; `.github/workflows/release-flutter.yml` publishes |
 | PHP | tag `vX.Y.Z` | Packagist reads the tag (composer.json at the root) |
+| Kotlin | `kotlin/gradle.properties` (`VERSION_NAME`), `SDK_VERSION` in `PaywayService.kt`, `kotlin/CHANGELOG.md` | push tag `kotlin-vX.Y.Z`; `.github/workflows/release-kotlin.yml` publishes to Maven Central |
 | Node.js | `node/package.json`, `node/src/version.ts`, `node/CHANGELOG.md` | push tag `node-vX.Y.Z`; `.github/workflows/release-node.yml` publishes |
 
 Plain `v*` tags are PHP releases; use prefixed tags (e.g. `dart-v2.0.1`) for
@@ -93,6 +103,12 @@ One-time setup for Dart and Flutter: on pub.dev, the package → Admin →
 Automated publishing → GitHub Actions, repository
 `kechankrisna/payway-checkout`, tag pattern `dart-v{{version}}` (dart_payway)
 or `flutter-v{{version}}` (flutter_payway).
+
+One-time setup for Kotlin: on central.sonatype.com, verify the namespace
+`io.github.kechankrisna` and generate a user token; create a GPG signing key
+and publish its public key to a keyserver; then add the repository secrets
+`MAVEN_CENTRAL_USERNAME`, `MAVEN_CENTRAL_PASSWORD` (the token),
+`SIGNING_KEY` (ASCII-armored private key) and `SIGNING_PASSWORD`.
 
 One-time setup for Node.js (npm trusted publishing, no token): on
 npmjs.com, `@kechankrisna/payway-checkout` → Settings → Trusted publishing →
